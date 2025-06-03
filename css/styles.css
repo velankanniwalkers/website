@@ -1,0 +1,1405 @@
+ /* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+    
+
+header {
+    background-color: #00239c;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+ 
+/* Navbar Styles */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: #00239c;
+    padding: 0.1rem 0rem;
+    position: relative;
+    z-index: 1000;
+}
+
+/* Logo and Name Container */
+.logo-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.church-logo {
+    width: 50px;
+    height: 50px;
+    object-fit:cover; /* or 'cover' if you want it to fill the box */
+    background-color: white; /* remove white if PNG is transparent */
+    border: 2px solid #D4AF37;
+    border-radius: 50%; /* 50% is enough for circle */
+}
+
+
+.church-name {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.sub-text {
+    color: white;
+    font-size: 0.8rem;
+    margin: 0;
+    text-align: center;
+}
+/* Nav Links (Hidden on Mobile by Default) */
+.nav-links {
+    display: flex; /* Show by default on desktop */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #D4AF37;
+}
+
+/* Hamburger Menu (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    color: white;
+    font-size: 1.5rem;
+    z-index: 1002;
+}
+
+/* Mobile Menu Styles */
+@media (max-width: 768px) {
+    /* Hide regular nav links on mobile */
+    .nav-links {
+        display: none;
+    }
+    
+    /* Show hamburger on mobile */
+    .hamburger {
+        display: block;
+    }
+    
+    /* Mobile menu when active */
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100vh;
+        background: #00239c;
+        padding: 5rem 1rem 1rem;
+        gap: 1.5rem;
+        text-align: left;
+        z-index: 1001;
+        transform: translateX(-100%);
+        animation: slideIn 0.3s forwards;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .nav-links.active.hide {
+        animation: slideOut 0.3s forwards;
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+    }
+    
+    @keyframes slideOut {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+    }
+    
+    /* Overlay styles */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    
+    .overlay.show {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+/* Desktop Styles (Nav Links Visible) */
+@media (min-width: 769px) {
+    .hamburger {
+        display: none; /* Hide hamburger on desktop */
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 1rem;
+        flex-grow: 1;
+        justify-content: center;
+    }
+}
+/* Image Slider Styles */
+.slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+    z-index: 1; /* Ensure it stays below the nav bar */
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* Adjust to 100% for one image per slide */
+}
+
+.slides img {
+    width: 100%; /* Each image takes full width of the slider */
+    height: 550px; /* Default height for larger screens */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #00239c;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.slider-button:hover {
+    background-color: #D4AF37;
+}
+
+.prev-button {
+    left: 10px;
+}
+
+.next-button {
+    right: 10px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .slides img {
+        height: 300px; /* Reduce height for smaller screens */
+    }
+
+    .slider-button {
+        width: 30px; /* Smaller buttons for mobile */
+        height: 30px;
+        font-size: 1.2rem;
+        padding: 8px;
+    }
+
+    .prev-button {
+        left: 5px; /* Adjust button positioning for mobile */
+    }
+
+    .next-button {
+        right: 5px; /* Adjust button positioning for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .slides img {
+        height: 200px; /* Further reduce height for very small screens */
+    }
+
+    .slider-button {
+        width: 25px; /* Even smaller buttons for very small screens */
+        height: 25px;
+        font-size: 1rem;
+        padding: 6px;
+    }
+}
+
+/* Marquee Section Styles */
+.marquee-section {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: transparent;
+    padding: 10px 0;
+}
+/* Marquee Section Styles */
+.marquee-section {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: transparent; /* No background color */
+    padding: 10px 0;
+}
+
+.marquee-text {
+    color: #00239c; /* Brown text color */
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family:'Times New Roman', Times, serif;
+    display: inline-block;
+    padding-left: 10%; /* Start off-screen */
+    animation: marquee 25s linear infinite; /* Adjust duration as needed */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Start from the right */
+    }
+    100% {
+        transform: translateX(-100%); /* Move to the left */
+    }
+}
+/* Family and Anbiyans Section Styles */
+.count-section {
+   /* Dark blue background */
+    color: white; /* White text */
+    padding: 1rem 1rem;
+    text-align: center;
+}
+
+.count-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.count-item {
+    flex: 1;
+    min-width: 200px;
+    padding: 1rem;
+    background-color: #00239c; /* Semi-transparent white background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #D4AF37;
+}
+
+.count-item h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.count-item .count {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: white; /* Gold color for the count */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .count-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .count-item {
+        width: 80%;
+    }
+}
+/* First Section: Single YouTube Live Stream */
+.youtube-live {
+    width: 90%; /* Fit the screen width */
+    max-width: 1200px; /* Optional: Limit maximum width */
+    height: 400px; /* Rectangular shape height */
+    margin: 0 auto; /* Center the container */
+    padding: 0; /* No padding */
+    border: 0; /* No border */
+    overflow: hidden; /* Hide overflow */
+}
+
+.youtube-live iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove iframe border */
+}
+
+/* Second Section: Three YouTube Videos in Square Shapes */
+.youtube-grid {
+    display: flex;
+    justify-content: space-between; /* Space out the videos */
+    width: 90%; /* Same width as the first section */
+    max-width: 1200px; /* Optional: Limit maximum width */
+    margin: 20px auto; /* Center the container and add margin */
+    padding: 0; /* No padding */
+    gap: 20px; /* Space between videos */
+}
+
+.youtube-video {
+    flex: 1; /* Each video takes equal space */
+    aspect-ratio: 1 / 1; /* Square shape */
+    overflow: hidden; /* Hide overflow */
+}
+
+.youtube-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove iframe border */
+}
+@media (max-width: 768px) {
+    .youtube-live {
+        height: 250px; /* Adjust height for smaller screens */
+    }
+
+    .youtube-grid {
+        flex-direction: column; /* Stack videos vertically on small screens */
+        gap: 10px; /* Reduce gap between videos */
+    }
+
+    .youtube-video {
+        aspect-ratio: 16 / 9; /* Change to rectangular shape for better visibility */
+    }
+}
+/* History Section Styles */
+.history-section {
+    background-color: #FDEFB5; /* Light red background */
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 10px;
+}
+
+.history-heading {
+    color: #00239c;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.history-content {
+    color: black;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.history-content.expanded {
+    max-height: none; /* Allow full expansion on all devices */
+}
+
+.history-content strong {
+    color: #00239c;
+}
+
+/* Read More Button Styles */
+.read-more-btn {
+    display: block;
+    margin: 1rem auto 0;
+    padding: 0.5rem 1rem;
+    background-color: #00239c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background-color: #D4AF37;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .history-section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .history-heading {
+        font-size: 1.5rem;
+    }
+
+    .history-content {
+        font-size: 1rem;
+        max-height: 150px;
+    }
+
+    .history-content.expanded {
+        max-height: none; /* Still allow full expansion on mobile */
+    }
+
+    .read-more-btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Extra small devices */
+
+
+/* Our Priests Section */
+.priests-section {
+    padding: 2rem;
+    text-align: center;
+    background-color: #FDEFB5; /* Light red background */
+    margin: 2rem 0; /* Add margin for spacing */
+}
+
+.priests-heading {
+    font-size: 2rem;
+    color: #00239c;
+    margin-bottom: 1.5rem;
+    font-family: 'Times New Roman', serif; /* Elegant font */
+}
+
+.priests-container {
+    display: flex;
+    justify-content: center; /* Center the profiles horizontally */
+    gap: 20px; /* Space between profiles */
+    max-width: 1200px; /* Limit maximum width */
+    margin: 0 auto; /* Center the container */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.priest-profile {
+    flex: 1; /* Each profile takes equal space */
+    max-width: 300px; /* Limit maximum width of each profile */
+    text-align: center;
+    background-color: white; /* White background for each profile */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px #FDEFB5; /* Subtle shadow */
+    overflow: hidden; /* Ensure content doesn't overflow */
+    padding: 10px; /* Add padding inside the profile */
+    border: 3px solid #00239c; /* Add border to all profiles */
+}
+
+.priest-profile img {
+    width: 100%; /* Make the image fill the container */
+    aspect-ratio: 1 / 1.2; /* Slightly taller than square (1:1.2 ratio) */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Adjust the height of the third image */
+.priest-profile:nth-child(3) img {
+    aspect-ratio: auto; /* Remove fixed aspect ratio */
+    height: 350px; /* Set a specific height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+.priest-profile h3 {
+    font-size: 1.5rem;
+    margin: 10px 0 5px;
+    color: #00239c;
+}
+
+.priest-profile p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0; /* Remove default margin */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .priests-container {
+        flex-direction: column; /* Stack profiles vertically on smaller screens */
+        align-items: center; /* Center profiles horizontally */
+    }
+
+    .priest-profile {
+        max-width: 100%; /* Allow profiles to take full width */
+        margin-bottom: 20px; /* Add space between stacked profiles */
+    }
+
+    .priest-profile:nth-child(3) img {
+        height: 300px; /* Adjust height for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .priest-profile:nth-child(3) img {
+        height: 250px; /* Further adjust height for very small screens */
+    }
+}
+/* Jubilee Image Styling */
+.priest-profile.jubilee-profile {
+    flex: 0 0 100%; /* Take full width */
+    max-width: 100%; /* Full width */
+    text-align: center; /* Center the image */
+    margin: 20px 0; /* Add some margin */
+}
+
+.priest-profile.jubilee-profile img {
+    width: 80%; /* Make the image wider */
+    max-width: 700px; /* Limit maximum width */
+    height: auto; /* Maintain aspect ratio */
+    aspect-ratio: auto; /* Remove fixed aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+}
+
+@media (max-width: 768px) {
+    .priests-container {
+        flex-direction: column; /* Stack profiles vertically */
+        align-items: center; /* Center profiles horizontally */
+        gap: 30px; /* Increase gap for better spacing */
+    }
+
+    .priest-profile {
+        max-width: 100%; /* Allow profiles to take full width */
+    }
+}
+/* Prayer Request Button Styles */
+.prayer-request-button {
+    display: inline-block; /* Make it behave like a button */
+    background-color: #00239c; /* Brown background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Add padding */
+    font-size: 1rem; /* Font size */
+    border: none; /* Remove border */
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    margin: 20px auto; /* Center the button with auto margins */
+    text-align: center; /* Center text */
+    width: fit-content; /* Fit content width */
+    display: block; /* Change to block to center properly */
+}
+
+.prayer-request-button:hover {
+    background-color: #D4AF37; /* Darker red on hover */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .prayer-request-button {
+        margin: 20px 10%; /* Smaller side margins on mobile */
+        padding: 8px 16px; /* Slightly smaller padding */
+        font-size: 0.9rem; /* Slightly smaller font */
+        width: 80%; /* Wider button on mobile */
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .prayer-request-button {
+        margin: 20px 5%; /* Even smaller margins */
+        padding: 8px 12px; /* More compact padding */
+        font-size: 0.85rem; /* Smaller font */
+        width: 90%; /* Nearly full width */
+    }
+}
+/* Mass Timings Section Styles */
+.mass-timings-section {
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.mass-timings-heading {
+    color: #00239c; /* Brown text color */
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* Space between icon and text */
+}
+
+.mass-timings-heading i {
+    font-size: 1.5rem; /* Adjust icon size */
+    color:  #00239c; /* Brown icon color */
+}
+
+.mass-timings-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+.timings {
+    flex: 1;
+    background-color: #FDEFB5; /* Light red background */
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timings h3 {
+    color: #00239c; /* Brown text color */
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.timings ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.timings ul li {
+    color: black; /* Brown text color */
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.timings ul li strong {
+    color:  #00239c; /* Dark red for emphasized text */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mass-timings-container {
+        flex-direction: column;
+    }
+
+    .timings {
+        width: 100%;
+    }
+}
+/* Video Section Styles */
+.video-section {
+    padding: 2rem 1rem; /* Add padding for spacing */
+    text-align: center; /* Center align content */
+    background-color: #FDEFB5; /* Light red background */
+    margin: 2rem 0; /* Add margin for spacing */
+}
+
+.video-heading {
+    color: #00239c; /* Brown text color */
+    font-size: 2rem; /* Large font size */
+    margin-bottom: 1.5rem; /* Space below the heading */
+    font-family: 'Times New Roman', serif; /* Elegant font */
+}
+
+.video-container {
+    max-width: 800px; /* Limit maximum width */
+    margin: 0 auto; /* Center the container */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hide overflow */
+    box-shadow: 0 4px 8px #FDEFB5; /* Add a subtle shadow */
+}
+
+.video-container iframe {
+    width: 100%; /* Full width of the container */
+    height: 400px; /* Fixed height for the video */
+    border: none; /* Remove iframe border */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .video-heading {
+        font-size: 1.5rem; /* Smaller font size for mobile */
+    }
+
+    .video-container iframe {
+        height: 250px; /* Adjust height for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .video-container iframe {
+        height: 200px; /* Further adjust height for very small screens */
+    }
+}
+/* Prayer Request Button Styles */
+.prayer-request-section {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.prayer-request-button {
+    background-color: #00239c; /* Brown background */
+    color: white; /* White text */
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.prayer-request-button:hover {
+    background-color: #D4AF37; /* Darker red on hover */
+}
+
+
+/* Announcements Section Styles */
+.announcements-section {
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.announcements-heading {
+    color: #00239c; /* Brown text color */
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* Space between icon and text */
+}
+
+.announcements-heading i {
+    font-size: 1.5rem; /* Adjust icon size */
+    color: #00239c; /* Brown icon color */
+}
+
+/* Announcements Container */
+.announcements-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+/* English and Tamil Announcements */
+.english-announcement,
+.tamil-announcement,
+.text-announcement {
+    flex: 1;
+}
+
+/* Announcement Labels */
+.announcement-label {
+    color: #00239c; /* Brown text color */
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.tamil-announcement .announcement-label {
+    text-align: center; /* Align Tamil label to the right */
+}
+
+.text-announcement .announcement-label {
+    text-align: center; /* Center the label for text announcements */
+}
+
+/* Announcement Container */
+.announcement {
+    background-color: #FDEFB5; /* Light red background */
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #FDEFB5;
+    overflow: hidden; /* Ensure the content doesn't overflow */
+}
+
+.announcement img {
+    width: 100%; /* Make the image fill the container */
+    height: auto; /* Adjust height automatically */
+    border-radius: 10px; /* Rounded corners for the image */
+    display: block; /* Remove extra space below the image */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+/* Text Announcement Styles */
+.text-announcement .announcement {
+    background-color: #FDEFB5; /* Light red background */
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #FDEFB5
+}
+
+.text-announcement p {
+    color: #333; /* Dark text color */
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .announcements-section {
+        padding: 0; /* Remove padding for full-width background */
+    }
+
+    .announcements-container {
+        flex-direction: column;
+        gap: 1rem; /* Reduce gap between announcements */
+    }
+
+    .announcement-label {
+        text-align: center; /* Center labels on smaller screens */
+    }
+
+    .tamil-announcement .announcement-label {
+        text-align: center; /* Center Tamil label on smaller screens */
+    }
+
+    .text-announcement .announcement-label {
+        text-align: center; /* Center text announcement label on smaller screens */
+    }
+
+    /* Adjust announcement container for mobile view */
+    .announcement {
+        padding: 1rem; /* Add some padding for better spacing */
+        border-radius: 10px; /* Keep border radius for a clean look */
+        margin: 0; /* Reset margin for mobile */
+    }
+
+    /* Adjust image for mobile view */
+    .announcement img {
+        width: 100%; /* Full width of the container */
+        height: auto; /* Maintain aspect ratio */
+        border-radius: 10px; /* Keep border radius for a clean look */
+    }
+
+    /* Adjust text announcement for mobile view */
+    .text-announcement p {
+        font-size: 0.9rem; /* Slightly smaller text for mobile */
+    }
+}
+/* Parish News Section Styles */
+.parish-news-section {
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.parish-news-heading {
+    color: #00239c; /* Brown text color */
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.parish-news-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+/* Left Side: Image Swiper */
+.image-swiper {
+    flex: 1;
+    max-width: 50%;
+}
+
+.swiper-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #FDEFB5;
+}
+
+.swiper-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.swiper-slide {
+    flex: 0 0 100%;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Swiper Buttons */
+.swiper-button-prev,
+.swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #00239c; /* Brown background */
+    color: white; /* White text */
+    border: none;
+    padding: 5px; /* Smaller padding */
+    cursor: pointer;
+    font-size: 1rem; /* Smaller font size */
+    border-radius: 50%; /* Circular buttons */
+    width: 30px; /* Smaller width */
+    height: 30px; /* Smaller height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: #D4AF37; /* Darker red on hover */
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    content: ''; /* Remove default icons */
+}
+
+.swiper-button-prev::before {
+    content: '<'; /* Custom icon for previous button */
+}
+
+.swiper-button-next::before {
+    content: '>'; /* Custom icon for next button */
+}
+
+.swiper-button-prev {
+    left: 10px; /* Position left button */
+}
+
+.swiper-button-next {
+    right: 10px; /* Position right button */
+}
+/* Right Side: News Content */
+.news-content {
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+}
+
+.news-content h3 {
+    color: #00239c; /* Brown text color */
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-content h4 {
+    color: #D4AF37; /* Dark red text color */
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.news-content p {
+    color: #00239c; /* Brown text color */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .parish-news-container {
+        flex-direction: column;
+    }
+
+    .image-swiper,
+    .news-content {
+        max-width: 100%;
+    }
+}
+/* Show News Button */
+.show-news-btn {
+    background-color: #00239c; /* Brown background */
+    color: white; /* White text */
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.show-news-btn:hover {
+    background-color: #D4AF37; /* Darker red on hover */
+}
+
+/* Dialog Box */
+.dialog {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FDEFB5; /* Semi-transparent background */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #00239c; /* Brown text color */
+}
+
+.close-btn:hover {
+    color: #D4AF37; /* Darker red on hover */
+}
+/* Footer Section Styles */
+.footer-section {
+    background-color: #00239c; /* Brown background */
+    color: white; /* White text */
+    padding: 2rem 0; /* Padding top and bottom */
+    width: 100%; /* Full width */
+    margin: 0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between; /* Space out columns */
+    max-width: 1200px; /* Limit maximum width */
+    margin: 0 auto; /* Center the container */
+    gap: 1rem; /* Space between columns */
+    padding: 0 1rem; /* Add padding to sides */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Equal space for each column on desktop */
+.footer-column {
+    flex: 1; /* Each column takes equal space */
+    min-width: 200px; /* Minimum width for each column */
+    margin-bottom: 1.5rem; /* Space between rows on mobile */
+    padding: 0 0.5rem; /* Add padding inside columns */
+}
+
+/* Footer Logo */
+.footer-logo {
+    width: 200px; /* Medium square shape */
+    height: 170px;
+    object-fit: cover;
+    border-radius: 10px; /* Rounded corners */
+    display: block; /* Ensure it behaves as a block element */
+    margin: 0 auto; /* Center the logo */
+}
+
+/* Quick Links */
+.quick-links {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    /* Align text to the left */
+}
+
+.quick-links li {
+    margin-bottom: 0.5rem; /* Space between links */
+}
+
+.quick-links a {
+    color: white; /* White text */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.quick-links a:hover {
+    color: #D4AF37; /* Gold color on hover */
+}
+
+/* Contact Information */
+.contact-info {
+    list-style: none;
+    padding: 0;
+    text-align: left; /* Align text to the left */
+}
+
+.contact-info li {
+    margin-bottom: 0.5rem; /* Space between items */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Space between icon and text */
+}
+
+.contact-info i {
+    color: #D4AF37; /* Gold color for icons */
+}
+
+/* Google Map */
+.map-container {
+    width: 100%;
+    height: 200px; /* Fixed height for the map */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hide overflow */
+    margin-bottom: 1rem; /* Add space below the map */
+}
+
+/* Donate Us Section */
+.donate-info {
+    list-style: none;
+    padding: 0;
+    text-align: left; /* Align text to the left */
+}
+
+.donate-info li {
+    margin-bottom: 0.5rem; /* Space between items */
+}
+
+.donate-info strong {
+    color: #D4AF37; /* Gold color for emphasized text */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Stack columns vertically */
+        align-items: center; /* Center align columns */
+        text-align: center; /* Center text */
+    }
+
+    .footer-column {
+        width: 100%; /* Full width for each column */
+        padding: 0; /* Remove padding */
+        text-align: center; /* Center text */
+    }
+
+    .quick-links,
+    .contact-info,
+    .donate-info {
+        text-align: center; /* Center align text */
+    }
+
+    .contact-info li {
+        justify-content: center; /* Center align contact items */
+    }
+
+    .footer-logo {
+        margin-bottom: 1rem; /* Add space below the logo */
+    }
+
+    .map-container {
+        margin-bottom: 1rem; /* Add space below the map on mobile */
+    }
+}
+/* Back to Top Button */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #00239c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    box-shadow: 0 2px 8px #FDEFB5;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+  }
+  
+  .back-to-top-btn:hover {
+    background-color: #D4AF37;
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+  
+  .back-to-top-btn i {
+    font-size: 1.2em;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .back-to-top-btn {
+      width: 45px;
+      height: 45px;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+  /* Image Slider Section - Round Images with Info */
+.image-slider-section {
+    padding: 40px 20px;
+    background-color: #FDEFB5;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.slider-heading {
+    color: #00239c;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Times New Roman', serif;
+}
+
+.slider-container {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.slide {
+    min-width: 100%;
+    display: none;
+    text-align: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.slide.active {
+    display: block;
+}
+
+.round-image-container {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #00239c;
+    box-shadow: 0 4px 8px #FDEFB5;
+}
+
+.round-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.priest-info {
+    margin-top: 15px;
+}
+
+.priest-info h3 {
+    color: #00239c;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.priest-info p {
+    color: #555;
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
+.priest-info .tenure {
+    color: #00239c;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.slider-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    background-color: #FDEFB5;
+    margin-top: 20px;
+}
+
+.slider-prev, .slider-next {
+    background-color: #00239c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin: 0 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.slider-prev:hover, .slider-next:hover {
+    background-color: #D4AF37;
+}
+
+.slider-dots {
+    display: flex;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background: #00239c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .round-image-container {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .priest-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .priest-info p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .round-image-container {
+        width: 180px;
+        height: 180px;
+        border-width: 4px;
+    }
+    
+    .slider-heading {
+        font-size: 1.5rem;
+    }
+    
+    .priest-info h3 {
+        font-size: 1.2rem;
+    }
+}

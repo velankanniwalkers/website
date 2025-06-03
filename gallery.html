@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gallery of Our Lady of Good Health Church in Lakshmipuram, Chennai - View photos of our church events and activities.">
+    <title>Gallery - Arokia Matha Aalayam, Lakshmipuram</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Main Color Theme */
+        :root {
+            --primary-color: brown;
+            --secondary-color: darkred;
+            --light-bg: rgba(255, 0, 0, 0.1);
+            --text-color: #333;
+            --white: #fff;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header Section */
+        .gallery-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gallery-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('images/pattern.png') repeat;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .gallery-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: #f0f0f0;
+        }
+        
+        /* Gallery Container */
+        .gallery-container {
+            padding: 0 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            padding: 15px;
+            background-color: var(--white);
+            border-top: 3px solid var(--primary-color);
+        }
+        
+        .gallery-caption h3 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .gallery-caption p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Lightbox Overlay */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        }
+        
+        .lightbox-caption {
+            color: var(--white);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            padding: 0 20px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--secondary-color);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
+        .lightbox-prev, .lightbox-next {
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.5);
+            padding: 10px 15px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .lightbox-prev:hover, .lightbox-next:hover {
+            background-color: var(--primary-color);
+        }
+        
+        /* Download Button */
+        .download-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .download-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* View More Section */
+        .view-more-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+        }
+        
+        .view-more-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .view-more-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .view-more-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Section Divider */
+        .section-divider {
+            border: none;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 40px auto;
+            width: 80px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-header {
+                padding: 40px 0;
+            }
+            
+            .gallery-title {
+                font-size: 2rem;
+            }
+            
+            .gallery-img-container {
+                height: 240px;
+            }
+            
+            .view-more-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-title {
+                font-size: 1.8rem;
+            }
+            
+            .lightbox-img {
+                max-height: 70vh;
+            }
+            
+            .download-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .view-more-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="gallery-header">
+        <div class="container">
+            <h1 class="gallery-title">Our Events Gallery</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Gallery Content -->
+    <main class="gallery-container">
+        <!-- Gallery Grid -->
+        <div class="gallery-grid">
+            <!-- Gallery Item 1 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img1.JPG', 'Altar Service')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img1.JPG" alt="Altar Service" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Altar Service</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 2 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img2.JPG', 'Arockia Annai Youth Group')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img2.JPG" alt="Arockia Annai Youth Group" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Arockia Annai Youth Group</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 4 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img4.JPG', 'English Choir')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img4.JPG" alt="English Choir" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>English Choir</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 5 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img5.jpg', 'Family day Celebration')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img5.jpg" alt="Family day Celebration" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Family day Celebration</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 6 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img6.jpg', 'Pongal Celebration')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img6.jpg" alt="Pongal Celebration" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Pongal Celebration</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 7 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img7.jpg', 'Family day')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img7.jpg" alt="Family day" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Family day</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 8 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img8.jpg', 'Pongal Celebration events')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img8.jpg" alt="Pongal Celebration events" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Pongal Celebration events</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 9 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img9.jpg', 'Pongal Celebration events')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img9.jpg" alt="Pongal Celebration events" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Pongal Celebration events</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 10 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img10.jpg', 'Pongal Celebration events')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img10.jpg" alt="Pongal Celebration events" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Pongal Celebration events</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 11 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img11.JPG', 'Legion of Mary Men')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img11.JPG" alt="Legion of Mary Men" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Legion of Mary Men</h3>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 12 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img12.png', 'Anbiyam Heads')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img12.png" alt="Anbiyam Heads" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Anbiyam Heads</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 15 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img15.JPG', 'Tamil Choir')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img15.JPG" alt="Tamil Choir" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Tamil Choir</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 17 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img17.png', 'Legion of Mary Womens')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img17.png" alt="Legion of Mary Womens" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Legion of Mary Women</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 18 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img18.jpg', 'Catechism Teachers')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img18.jpg" alt="Catechism Teachers" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Catechism Teachers</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 19 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img19.jpg', 'Church Meetings')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img19.jpg" alt="Church Meetings" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Church Meetings</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 20 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img20.png', 'Vincent de Paul')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img20.png" alt="Vincent de Paul" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Vincent de Paul</h3>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 21 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img21.png', 'Liturgy Group')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img21.png" alt="Liturgy Group" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Liturgy Group</h3>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 22 -->
+            <div class="gallery-item" onclick="openLightbox('gallery/img22.jpg', 'Church Frontliners')">
+                <div class="gallery-img-container">
+                    <img src="gallery/img22.jpg" alt="Church Frontliners" class="gallery-img">
+                </div>
+                <div class="gallery-caption">
+                    
+                </div>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- View More Gallery Section -->
+        <div class="view-more-section">
+            <h2 class="view-more-title">Want to See More Gallery?</h2>
+            <a href="https://1drv.ms/f/c/33db86cc96269a7e/EjdAJKO2FeVIms1xeAjW8GQBntSLFRliLFHSFrGmzDqrPg" class="view-more-btn" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-images"></i> View Full Gallery
+            </a>
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-nav">
+            <span class="lightbox-prev" onclick="changeImage(-1)">&#10094;</span>
+            <span class="lightbox-next" onclick="changeImage(1)">&#10095;</span>
+        </div>
+        <div class="lightbox-content">
+            <img id="lightbox-img" class="lightbox-img" src="" alt="">
+            <div id="lightbox-caption" class="lightbox-caption"></div>
+            <button class="download-btn" onclick="downloadImage()">
+                <i class="fas fa-download"></i> Download
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Gallery images data
+        const galleryImages = [
+            { src: 'gallery/img1.JPG', caption: 'Altar Service' },
+            { src: 'gallery/img2.JPG', caption: 'Arockia Annai Youth Group' },
+            { src: 'gallery/img4.JPG', caption: 'English Choir' },
+            { src: 'gallery/img5.jpg', caption: 'Family day Celebration' },
+            { src: 'gallery/img6.jpg', caption: 'Pongal Celebration' },
+            { src: 'gallery/img7.jpg', caption: 'Family day' },
+            { src: 'gallery/img8.jpg', caption: 'Pongal Celebration events' },
+            { src: 'gallery/img9.jpg', caption: 'Pongal Celebration events' },
+            { src: 'gallery/img10.jpg', caption: 'Pongal Celebration events' },
+            { src: 'gallery/img11.JPG', caption: 'Legion of Mary Men' },
+            { src: 'gallery/img12.png', caption: 'Anbiyam Heads' },
+            { src: 'gallery/img15.JPG', caption: 'Tamil Choir' },
+            { src: 'gallery/img17.png', caption: 'Legion of Mary Womens' },
+            { src: 'gallery/img18.jpg', caption: 'Catechism Teachers' },
+            { src: 'gallery/img19.jpg', caption: 'Church Meetings' },
+            { src: 'gallery/img20.png', caption: 'Vincent de Paul' },
+            { src: 'gallery/img21.png', caption: 'Liturgy Group' },
+            { src: 'gallery/img22.jpg', caption: 'Church Frontliners' }
+        ];
+        
+        let currentImageIndex = 0;
+        
+        // Open lightbox with specific image
+        function openLightbox(src, caption) {
+            // Find the index of the clicked image
+            currentImageIndex = galleryImages.findIndex(img => img.src === src);
+            
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            
+            lightboxImg.src = src;
+            lightboxCaption.textContent = caption;
+            lightbox.style.display = 'flex';
+            
+            // Prevent scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close lightbox
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            
+            // Restore scrolling
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Change image in lightbox
+        function changeImage(step) {
+            currentImageIndex += step;
+            
+            // Wrap around if at beginning or end
+            if (currentImageIndex >= galleryImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = galleryImages.length - 1;
+            }
+            
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            
+            lightboxImg.src = galleryImages[currentImageIndex].src;
+            lightboxCaption.textContent = galleryImages[currentImageIndex].caption;
+        }
+        
+        // Download current image
+        function downloadImage() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const currentImage = galleryImages[currentImageIndex];
+            
+            // Create a temporary anchor element
+            const link = document.createElement('a');
+            link.href = currentImage.src;
+            
+            // Extract filename from the path
+            const filename = currentImage.src.split('/').pop() || 'church_image.jpg';
+            
+            // Set the download attribute with a proper filename
+            link.download = filename;
+            
+            // Append to body, click and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (e.key === 'ArrowRight') {
+                    changeImage(1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

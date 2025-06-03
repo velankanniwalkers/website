@@ -1,0 +1,218 @@
+<!-- Combined Admin + Display Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Admin and Viewer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; background: #f4f4f4; }
+    .form-wrapper, .count-section, .mass-timings-container { max-width: 700px; margin: 30px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    label { display: block; margin: 15px 0 5px; }
+    input, textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 15px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .count-container { display: flex; justify-content: space-around; }
+    .count-item { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 10px; }
+    .form-wrapper {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+    td, th {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN (auto login for demo) -->
+<script>
+  const id = "ajithkumar";
+  const pass = "123456789";
+  const userLoggedIn = (id === "ajithkumar" && pass === "123456789");
+</script>
+
+<!-- Update Count Form -->
+<div class="form-wrapper" id="count-section">
+  <h2>Update Member and Team Count</h2>
+  <form onsubmit="submitCounts(); return false;">
+    <label>Members Count</label>
+    <input type="number" id="members-count" placeholder="e.g. 75" required>
+
+    <label>Teams Count</label>
+    <input type="number" id="teams-count" placeholder="e.g. 5" required>
+
+    <button type="submit">Update Counts</button>
+  </form>
+</div>
+
+<!-- Script to Store & Display -->
+<script>
+  function submitCounts() {
+    const members = document.getElementById("members-count").value;
+    const teams = document.getElementById("teams-count").value;
+    localStorage.setItem("count_members", members);
+    localStorage.setItem("count_teams", teams);
+    alert("Counts updated!");
+    renderCounts();
+  }
+
+  function renderCounts() {
+    document.getElementById("count-members").textContent = localStorage.getItem("count_members") || "0";
+    document.getElementById("count-teams").textContent = localStorage.getItem("count_teams") || "0";
+  }
+
+  document.addEventListener("DOMContentLoaded", renderCounts);
+</script>
+
+
+<!-- Admin Event Section -->
+<div class="form-wrapper" id="admin-section">
+  <h2>Update Events</h2>
+
+  <h3>English Events</h3>
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Info</th><th>Action</th></tr>
+    </thead>
+    <tbody id="english-event-rows"></tbody>
+  </table>
+
+  <h3>தமிழ் நிகழ்வுகள்</h3>
+  <table>
+    <thead>
+      <tr><th>தேதி</th><th>விவரம்</th><th>செயல்</th></tr>
+    </thead>
+    <tbody id="tamil-event-rows"></tbody>
+  </table>
+</div>
+
+<script>
+const MAX_EVENTS = 5;
+
+function loadEvents() {
+  const englishEvents = JSON.parse(localStorage.getItem("events_english") || "[]");
+  const tamilEvents = JSON.parse(localStorage.getItem("events_tamil") || "[]");
+
+  const enRows = document.getElementById("english-event-rows");
+  const taRows = document.getElementById("tamil-event-rows");
+
+  enRows.innerHTML = "";
+  taRows.innerHTML = "";
+
+  for (let i = 0; i < MAX_EVENTS; i++) {
+    const en = englishEvents[i] || { date: "", info: "" };
+    const ta = tamilEvents[i] || { date: "", info: "" };
+
+    enRows.innerHTML += `
+      <tr>
+        <td><input type="text" id="en-date-${i}" value="${en.date}" /></td>
+        <td><textarea id="en-info-${i}">${en.info}</textarea></td>
+        <td><button onclick="updateEvent('english', ${i})">Update</button></td>
+      </tr>
+    `;
+
+    taRows.innerHTML += `
+      <tr>
+        <td><input type="text" id="ta-date-${i}" value="${ta.date}" /></td>
+        <td><textarea id="ta-info-${i}">${ta.info}</textarea></td>
+        <td><button onclick="updateEvent('tamil', ${i})">புதுப்பிக்க</button></td>
+      </tr>
+    `;
+  }
+}
+
+function updateEvent(lang, index) {
+  const date = document.getElementById(`${lang === 'english' ? 'en' : 'ta'}-date-${index}`).value.trim();
+  const info = document.getElementById(`${lang === 'english' ? 'en' : 'ta'}-info-${index}`).value.trim();
+
+  const key = lang === 'english' ? 'events_english' : 'events_tamil';
+  const events = JSON.parse(localStorage.getItem(key) || "[]");
+
+  events[index] = { date, info };
+  localStorage.setItem(key, JSON.stringify(events));
+
+  alert(`${lang === 'english' ? 'English' : 'தமிழ்'} event ${index + 1} updated.`);
+  loadEvents();
+}
+
+window.onload = loadEvents;
+</script>
+<!-- Admin Announcement Section -->
+<div class="form-wrapper" id="admin-announcement-section">
+  <h2>Update Announcements</h2>
+
+  <!-- English Announcement -->
+  <form onsubmit="saveAnnouncement('english'); return false;" class="english-announcement">
+    <h3 class="announcement-label">English Announcement</h3>
+    <label>Title</label>
+    <input type="text" id="english-title" required>
+    <label>Information</label>
+    <textarea id="english-info" required></textarea>
+    <button type="submit">Update English</button>
+  </form>
+
+  <!-- Tamil Announcement -->
+  <form onsubmit="saveAnnouncement('tamil'); return false;" class="tamil-announcement">
+    <h3 class="announcement-label">தமிழ் அறிவிப்பு</h3>
+    <label>தலைப்பு</label>
+    <input type="text" id="tamil-title" required>
+    <label>விவரம்</label>
+    <textarea id="tamil-info" required></textarea>
+    <button type="submit">புதுப்பிக்க</button>
+  </form>
+
+  <!-- Text Label Announcement -->
+  <form onsubmit="saveAnnouncement('label'); return false;" class="text-announcement">
+    <h3 class="announcement-label">Announcement Label</h3>
+    <label>Title</label>
+    <input type="text" id="label-title" required>
+    <label>Information</label>
+    <textarea id="label-info" required></textarea>
+    <button type="submit">Update Label</button>
+  </form>
+</div>
+
+<script>
+  function saveAnnouncement(type) {
+    const title = document.getElementById(`${type}-title`).value.trim();
+    const info = document.getElementById(`${type}-info`).value.trim();
+    const html = `<strong>${title}</strong><p>${info}</p>`;
+    localStorage.setItem(`${type}_announcement`, html);
+    alert(`${type.charAt(0).toUpperCase() + type.slice(1)} announcement updated.`);
+  }
+</script>
+
+</body>
+</html>
