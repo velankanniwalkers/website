@@ -112,37 +112,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Priests Slider
     const priestsSlider = document.querySelector('.priests-slider');
-    const priestsSlides = document.querySelectorAll('.slide');
-    let priestIndex = 0;
-    const totalPriests = priestsSlides.length;
+const priestsSlides = document.querySelectorAll('.priests-slider .slide');
+let priestIndex = 0;
+const totalPriests = priestsSlides.length;
 
-    function movePriestSlider() {
-        priestsSlider.style.transform = `translateX(-${priestIndex * 100}%)`;
-    }
+function movePriestSlider() {
+  priestsSlider.style.transform = `translateX(-${priestIndex * 100}%)`;
+}
 
-    function autoPriestSlide() {
-        priestIndex = (priestIndex + 1) % totalPriests;
-        movePriestSlider();
-    }
+function autoPriestSlide() {
+  priestIndex = (priestIndex + 1) % totalPriests;
+  movePriestSlider();
+}
 
-    let priestInterval = setInterval(autoPriestSlide, 5000);
+let priestInterval = setInterval(autoPriestSlide, 5000);
 
-    document.querySelector('.prev-button')?.addEventListener('click', () => {
-        priestIndex = (priestIndex - 1 + totalPriests) % totalPriests;
-        movePriestSlider();
-        restartPriestSlider();
-    });
+document.querySelector('.prev-button')?.addEventListener('click', () => {
+  priestIndex = (priestIndex - 1 + totalPriests) % totalPriests;
+  movePriestSlider();
+  restartPriestSlider();
+});
 
-    document.querySelector('.next-button')?.addEventListener('click', () => {
-        priestIndex = (priestIndex + 1) % totalPriests;
-        movePriestSlider();
-        restartPriestSlider();
-    });
+document.querySelector('.next-button')?.addEventListener('click', () => {
+  priestIndex = (priestIndex + 1) % totalPriests;
+  movePriestSlider();
+  restartPriestSlider();
+});
 
-    function restartPriestSlider() {
-        clearInterval(priestInterval);
-        priestInterval = setInterval(autoPriestSlide, 5000);
-    }
+function restartPriestSlider() {
+  clearInterval(priestInterval);
+  priestInterval = setInterval(autoPriestSlide, 5000);
+}
 
     // Read More Button
     const readMoreBtn = document.getElementById('read-more-btn');
