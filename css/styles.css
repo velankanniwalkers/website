@@ -820,6 +820,9 @@ nav {
     box-shadow: 0 4px 8px #FDEFB5;
     overflow: hidden; /* Ensure the content doesn't overflow */
 }
+.announcement-info {
+  white-space: pre-line;
+}
 
 .announcement img {
     width: 100%; /* Make the image fill the container */
