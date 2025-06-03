@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Supabase Announcements Test</title>
+  <style>
+    .announcement {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <section id="announcement">
+    <div id="english-announcement" class="announcement hidden">
+      <h3 id="english-title">Loading English Title...</h3>
+      <p id="english-info">Loading English Information...</p>
+    </div>
+
+    <div id="tamil-announcement" class="announcement hidden">
+      <h3 id="tamil-title">தகவல் தலைப்பு ஏற்றப்படுகிறது...</h3>
+      <p id="tamil-info">தகவல் ஏற்றப்படுகிறது...</p>
+    </div>
+
+    <div id="error-message" class="hidden">
+      <p>Unable to load announcements at this time. Please try again later.</p>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = 'https://fdbesnvsaaugbkdkkmxz.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkYmVzbnZzYWF1Z2JrZGtrbXh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MzEyMjYsImV4cCI6MjA2NDUwNzIyNn0.hDev995HD6sOdyIkO4uoKjxCDPfhYFfnbSGLc1amlio';
+
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+    function showElement(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.remove('hidden');
+    }
+
+    function hideElement(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.add('hidden');
+    }
+
+    async function loadAnnouncements() {
+      hideElement('error-message');
+      
+      try {
+        const { data, error } = await supabaseClient
+          .from('announcements')
+          .select('id, lang, title, info')
+          .order('updated_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching announcements:', error);
+          showElement('error-message');
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          console.warn('No announcements found');
+          showElement('error-message');
+          return;
+        }
+
+        const english = data.find(item => item.lang.toLowerCase() === 'english');
+        const tamil = data.find(item => item.lang.toLowerCase() === 'tamil');
+
+        // English announcement
+        if (english) {
+          document.getElementById('english-title').textContent = english.title;
+          document.getElementById('english-info').textContent = english.info;
+          showElement('english-announcement');
+        } else {
+          hideElement('english-announcement');
+        }
+
+        // Tamil announcement
+        if (tamil) {
+          document.getElementById('tamil-title').textContent = tamil.title;
+          document.getElementById('tamil-info').textContent = tamil.info;
+          showElement('tamil-announcement');
+        } else {
+          hideElement('tamil-announcement');
+        }
+
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        showElement('error-message');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAnnouncements);
+  </script>
+</body>
+</html>

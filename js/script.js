@@ -186,5 +186,9 @@ function restartPriestSlider() {
             document.body.scrollTop = 0;
         }
     };
+
+
 });
+
+
 

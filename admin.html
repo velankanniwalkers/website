@@ -2,221 +2,352 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>VWSS Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 30px; background: #f4f4f4; }
-    .form-wrapper, .count-section, .mass-timings-container {
-      max-width: 700px; margin: 30px auto; background: white; padding: 20px;
-      border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* Custom styles for the Inter font and general layout */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6; /* Light gray background */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* Align to start to allow content to flow */
+      min-height: 100vh;
+      padding: 2rem;
+      box-sizing: border-box;
     }
-    h2, h3 { text-align: center; }
-    label { display: block; margin: 15px 0 5px; }
-    input, textarea {
-      width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;
+    .container {
+      background-color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 0.75rem; /* rounded-xl */
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+      max-width: 900px; /* Max width for better readability */
+      width: 100%;
+    }
+    h1, h2 {
+      color: #1f2937; /* Dark gray text */
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    form label {
+      font-weight: 500; /* Medium font weight */
+      color: #374151; /* Slightly lighter dark gray */
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db; /* Light gray border */
+      border-radius: 0.5rem; /* rounded-md */
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      box-sizing: border-box; /* Include padding in width */
     }
     button {
-      margin-top: 15px; padding: 10px 15px; background: #007bff; color: white;
-      border: none; border-radius: 5px; cursor: pointer;
+      background-color: #4f46e5; /* Indigo 600 */
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem; /* rounded-md */
+      font-weight: 600; /* Semibold */
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+      width: 100%; /* Full width button */
     }
-    button:hover { background: #0056b3; }
-    .logout-container { text-align: right; margin: 0 auto; max-width: 700px; }
-    .logout-button {
-      background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 5px;
+    button:hover {
+      background-color: #4338ca; /* Indigo 700 */
     }
-    table { width: 100%; margin: 20px 0; border-collapse: collapse; }
-    td, th { padding: 10px; border: 1px solid #ccc; }
+    p {
+      margin-top: 1rem;
+      text-align: center;
+      color: #4b5563; /* Gray 600 */
+    }
+    .error-message {
+      color: #ef4444; /* Red 500 */
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <div id="login-section">
+      <h1 class="text-3xl font-bold mb-6">Admin Login</h1>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="username-input" class="block text-sm font-medium text-gray-700">Email:</label>
+          <input type="email" id="username-input" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div>
+          <label for="password-input" class="block text-sm font-medium text-gray-700">Password:</label>
+          <input type="password" id="password-input" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
+        <p id="login-status" class="text-red-500 text-center text-sm mt-2"></p>
+      </form>
+    </div>
 
-<!-- LOGIN SECTION -->
-<div class="form-wrapper" id="login-section">
-  <h2>Admin Login</h2>
-  <form onsubmit="secureLogin(); return false;">
-    <label>Email</label>
-    <input type="email" id="login-email" required />
-    <label>Password</label>
-    <input type="password" id="login-password" required />
-    <button type="submit">Login</button>
-    <div id="login-error" style="color: red; margin-top: 10px;"></div>
-  </form>
-</div>
+    <div id="admin-content" class="hidden">
+      <h1 class="text-3xl font-bold">Update Team and Member Counts</h1>
 
-<!-- ADMIN SECTION -->
-<div id="admin-content" style="display: none;">
+      <form id="update-form" class="space-y-4">
+        <div>
+          <label for="members-input" class="block text-sm font-medium text-gray-700">Members:</label>
+          <input type="number" id="members-input" required min="0" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div>
+          <label for="teams-input" class="block text-sm font-medium text-gray-700">Teams:</label>
+          <input type="number" id="teams-input" required min="0" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Counts</button>
+      </form>
+      <p id="status" class="text-center text-sm mt-2"></p>
 
-  <!-- Logout -->
-  <div class="logout-container">
-    <button onclick="logout()" class="logout-button">Logout</button>
+      <h1 class="text-3xl font-bold mt-8">Admin - Update Announcements</h1>
+
+      <form id="announcement-form" class="space-y-4">
+        <h2 class="text-2xl font-semibold mt-6">English Announcement</h2>
+        <div>
+          <label for="english-title" class="block text-sm font-medium text-gray-700">Title:</label>
+          <input type="text" id="english-title" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div>
+          <label for="english-info" class="block text-sm font-medium text-gray-700">Info:</label>
+          <textarea id="english-info" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+        </div>
+
+        <h2 class="text-2xl font-semibold mt-6">தமிழ் அறிவிப்பு</h2>
+        <div>
+          <label for="tamil-title" class="block text-sm font-medium text-gray-700">தலைப்பு:</label>
+          <input type="text" id="tamil-title" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div>
+          <label for="tamil-info" class="block text-sm font-medium text-gray-700">தகவல்:</label>
+          <textarea id="tamil-info" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+        </div>
+
+        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Announcements</button>
+      </form>
+      <p id="announcement-status" class="text-center text-sm mt-2"></p>
+    </div>
   </div>
 
-  <!-- Member & Team Count -->
-  <div class="form-wrapper">
-    <h2>Update Member and Team Count</h2>
-    <form onsubmit="submitCounts(); return false;">
-      <label>Members Count</label>
-      <input type="number" id="members-count" required>
-      <label>Teams Count</label>
-      <input type="number" id="teams-count" required>
-      <button type="submit">Update Counts</button>
-    </form>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Initialize Supabase client (kept as per your original code for data operations)
+    const supabaseUrl = 'https://fdbesnvsaaugbkdkkmxz.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkYmVzbnZzYWF1Z2JrZGtrbXh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MzEyMjYsImV4cCI6MjA2NDUwNzIyNn0.hDev995HD6sOdyIkO4uoKjxCDPfhYFfnbSGLc1amlio';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-  <!-- Event Section -->
-  <div class="form-wrapper">
-    <h2>Update Events</h2>
+    // --- Login Elements ---
+    const loginSection = document.getElementById('login-section');
+    const adminContent = document.getElementById('admin-content');
+    const loginForm = document.getElementById('login-form');
+    const usernameInput = document.getElementById('username-input');
+    const passwordInput = document.getElementById('password-input');
+    const loginStatusP = document.getElementById('login-status');
 
-    <h3>English Events</h3>
-    <table>
-      <thead><tr><th>Date</th><th>Info</th><th>Action</th></tr></thead>
-      <tbody id="english-event-rows"></tbody>
-    </table>
+    // --- Admin Dashboard Elements (from your original code) ---
+    const countsRowId = 'a1d46fc9-df89-4171-98dc-700bd90f249e';
+    const form = document.getElementById('update-form');
+    const membersInput = document.getElementById('members-input');
+    const teamsInput = document.getElementById('teams-input');
+    const statusP = document.getElementById('status');
 
-    <h3>தமிழ் நிகழ்வுகள்</h3>
-    <table>
-      <thead><tr><th>தேதி</th><th>விவரம்</th><th>செயல்</th></tr></thead>
-      <tbody id="tamil-event-rows"></tbody>
-    </table>
-  </div>
+    const tamilId = 'a355ab9c-8968-4b94-a665-90111255b374';
+    const englishId = '3c779815-d3aa-41c0-a5ce-1261251451e1';
+    const englishTitle = document.getElementById('english-title');
+    const englishInfo = document.getElementById('english-info');
+    const tamilTitle = document.getElementById('tamil-title');
+    const tamilInfo = document.getElementById('tamil-info');
+    const announcementStatus = document.getElementById('announcement-status');
 
-  <!-- Announcements -->
-  <div class="form-wrapper">
-    <h2>Update Announcements</h2>
+    // --- Login Logic ---
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault(); // Prevent default form submission
 
-    <!-- English Announcement -->
-    <form onsubmit="saveAnnouncement('english'); return false;">
-      <h3>English Announcement</h3>
-      <label>Title</label>
-      <input type="text" id="english-title" required>
-      <label>Information</label>
-      <textarea id="english-info" required></textarea>
-      <button type="submit">Update English</button>
-    </form>
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
 
-    <!-- Tamil Announcement -->
-    <form onsubmit="saveAnnouncement('tamil'); return false;">
-      <h3>தமிழ் அறிவிப்பு</h3>
-      <label>தலைப்பு</label>
-      <input type="text" id="tamil-title" required>
-      <label>விவரம்</label>
-      <textarea id="tamil-info" required></textarea>
-      <button type="submit">புதுப்பிக்க</button>
-    </form>
+      // Hardcoded credentials
+      const correctUsername = 'velankanniwalkerssocialservice@gmail.com';
+      const correctPassword = 'avemariavwss';
 
-    <!-- Label -->
-    <form onsubmit="saveAnnouncement('label'); return false;">
-      <h3>Announcement Label</h3>
-      <label>Title</label>
-      <input type="text" id="label-title" required>
-      <label>Information</label>
-      <textarea id="label-info" required></textarea>
-      <button type="submit">Update Label</button>
-    </form>
-  </div>
-</div>
+      if (username === correctUsername && password === correctPassword) {
+        loginStatusP.textContent = ''; // Clear any previous error message
+        loginSection.classList.add('hidden'); // Hide login section
+        adminContent.classList.remove('hidden'); // Show admin content
 
-<!-- SCRIPT SECTION -->
-<script>
-  const VALID_EMAIL = "velankanniwalkerssocialservice@gmail.com";
-  const VALID_PASSWORD = "avemariavwss";
+        // Load all data after successful login
+        loadCurrentCounts();
+        loadAnnouncements();
+      } else {
+        loginStatusP.textContent = 'Invalid username or password.';
+        loginStatusP.classList.add('error-message'); // Add error styling
+      }
+    });
 
-  function secureLogin() {
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value;
-    if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-      localStorage.setItem("loggedIn", "true");
-      showAdminContent();
-    } else {
-      document.getElementById("login-error").textContent = "Invalid email or password.";
+    // --- Supabase Data Loading and Update Functions (from your original code) ---
+
+    // Load current counts from Supabase
+    async function loadCurrentCounts() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('counts')
+          .select('members, teams')
+          .eq('id', countsRowId)
+          .single();
+
+        if (error) {
+          statusP.textContent = 'Error loading counts: ' + error.message;
+          statusP.classList.add('error-message');
+          return;
+        }
+
+        membersInput.value = data.members ?? 0;
+        teamsInput.value = data.teams ?? 0;
+        statusP.textContent = ''; // Clear status after load
+      } catch (e) {
+        statusP.textContent = 'An unexpected error occurred while loading counts.';
+        statusP.classList.add('error-message');
+        console.error(e);
+      }
     }
-  }
 
-  function showAdminContent() {
-    document.getElementById("login-section").style.display = "none";
-    document.getElementById("admin-content").style.display = "block";
-    renderCounts();
-    loadEvents();
-  }
+    // Handle counts form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusP.textContent = 'Updating...';
+      statusP.classList.remove('error-message'); // Clear error styling
 
-  function logout() {
-    localStorage.removeItem("loggedIn");
-    location.reload();
-  }
+      const members = parseInt(membersInput.value);
+      const teams = parseInt(teamsInput.value);
 
-  window.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("loggedIn") === "true") {
-      showAdminContent();
+      if (isNaN(members) || isNaN(teams) || members < 0 || teams < 0) {
+        statusP.textContent = 'Please enter valid non-negative numbers for members and teams.';
+        statusP.classList.add('error-message');
+        return;
+      }
+
+      try {
+        const { error } = await supabaseClient
+          .from('counts')
+          .update({ members, teams })
+          .eq('id', countsRowId);
+
+        if (error) {
+          statusP.textContent = 'Update failed: ' + error.message;
+          statusP.classList.add('error-message');
+          return;
+        }
+
+        statusP.textContent = 'Counts updated successfully!';
+        statusP.classList.remove('error-message');
+      } catch (e) {
+        statusP.textContent = 'An unexpected error occurred during counts update.';
+        statusP.classList.add('error-message');
+        console.error(e);
+      }
+    });
+
+    // Load announcements data from Supabase
+    async function loadAnnouncements() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('announcements')
+          .select('*')
+          .in('id', [tamilId, englishId]);
+
+        if (error) {
+          announcementStatus.textContent = 'Error loading announcements: ' + error.message;
+          announcementStatus.classList.add('error-message');
+          return;
+        }
+
+        data.forEach(row => {
+          if (row.id === englishId) {
+            englishTitle.value = row.title || '';
+            englishInfo.value = row.info || '';
+          } else if (row.id === tamilId) {
+            tamilTitle.value = row.title || '';
+            tamilInfo.value = row.info || '';
+          }
+        });
+        announcementStatus.textContent = ''; // Clear status after load
+      } catch (e) {
+        announcementStatus.textContent = 'An unexpected error occurred while loading announcements.';
+        announcementStatus.classList.add('error-message');
+        console.error(e);
+      }
     }
-  });
 
-  // === Member & Team Count ===
-  function submitCounts() {
-    const members = document.getElementById("members-count").value;
-    const teams = document.getElementById("teams-count").value;
-    localStorage.setItem("count_members", members);
-    localStorage.setItem("count_teams", teams);
-    alert("Counts updated!");
-  }
+    // Handle announcements form submit
+    document.getElementById('announcement-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      announcementStatus.textContent = 'Updating...';
+      announcementStatus.classList.remove('error-message'); // Clear error styling
 
-  function renderCounts() {
-    document.getElementById("members-count").value = localStorage.getItem("count_members") || "";
-    document.getElementById("teams-count").value = localStorage.getItem("count_teams") || "";
-  }
+      const now = new Date().toISOString();
 
-  // === Events (English & Tamil) ===
-  const MAX_EVENTS = 5;
+      const updates = [
+        {
+          id: englishId,
+          title: englishTitle.value.trim(),
+          info: englishInfo.value.trim(),
+          updated_at: now
+        },
+        {
+          id: tamilId,
+          title: tamilTitle.value.trim(),
+          info: tamilInfo.value.trim(),
+          updated_at: now
+        }
+      ];
 
-  function loadEvents() {
-    const englishEvents = JSON.parse(localStorage.getItem("events_english") || "[]");
-    const tamilEvents = JSON.parse(localStorage.getItem("events_tamil") || "[]");
+      let success = true;
+      let errorMessage = '';
 
-    const enRows = document.getElementById("english-event-rows");
-    const taRows = document.getElementById("tamil-event-rows");
+      for (const update of updates) {
+        try {
+          const { error } = await supabaseClient
+            .from('announcements')
+            .update({
+              title: update.title,
+              info: update.info,
+              updated_at: update.updated_at
+            })
+            .eq('id', update.id);
 
-    enRows.innerHTML = "";
-    taRows.innerHTML = "";
+          if (error) {
+            success = false;
+            errorMessage = 'Error updating ' + (update.id === englishId ? 'English' : 'Tamil') + ' announcement: ' + error.message;
+            break;
+          }
+        } catch (e) {
+          success = false;
+          errorMessage = 'An unexpected error occurred during announcement update.';
+          console.error(e);
+          break;
+        }
+      }
 
-    for (let i = 0; i < MAX_EVENTS; i++) {
-      const en = englishEvents[i] || { date: "", info: "" };
-      const ta = tamilEvents[i] || { date: "", info: "" };
+      if (success) {
+        announcementStatus.textContent = 'Announcements updated successfully!';
+        announcementStatus.classList.remove('error-message');
+      } else {
+        announcementStatus.textContent = errorMessage;
+        announcementStatus.classList.add('error-message');
+      }
+    });
 
-      enRows.innerHTML += `
-        <tr>
-          <td><input type="text" id="en-date-${i}" value="${en.date}" /></td>
-          <td><textarea id="en-info-${i}">${en.info}</textarea></td>
-          <td><button onclick="updateEvent('english', ${i})">Update</button></td>
-        </tr>`;
-
-      taRows.innerHTML += `
-        <tr>
-          <td><input type="text" id="ta-date-${i}" value="${ta.date}" /></td>
-          <td><textarea id="ta-info-${i}">${ta.info}</textarea></td>
-          <td><button onclick="updateEvent('tamil', ${i})">புதுப்பிக்க</button></td>
-        </tr>`;
-    }
-  }
-
-  function updateEvent(lang, index) {
-    const prefix = lang === 'english' ? 'en' : 'ta';
-    const date = document.getElementById(`${prefix}-date-${index}`).value.trim();
-    const info = document.getElementById(`${prefix}-info-${index}`).value.trim();
-
-    const key = lang === 'english' ? 'events_english' : 'events_tamil';
-    const events = JSON.parse(localStorage.getItem(key) || "[]");
-    events[index] = { date, info };
-    localStorage.setItem(key, JSON.stringify(events));
-    alert(`${lang === 'english' ? 'English' : 'தமிழ்'} event ${index + 1} updated.`);
-  }
-
-  // === Announcements ===
-  function saveAnnouncement(type) {
-    const title = document.getElementById(`${type}-title`).value.trim();
-    const info = document.getElementById(`${type}-info`).value.trim();
-    const html = `<strong>${title}</strong><p>${info}</p>`;
-    localStorage.setItem(`${type}_announcement`, html);
-    alert(`${type.charAt(0).toUpperCase() + type.slice(1)} announcement updated.`);
-  }
-</script>
-
+    // Initial state: Hide admin content until logged in
+    adminContent.classList.add('hidden');
+    loginSection.classList.remove('hidden'); // Ensure login section is visible initially
+  </script>
 </body>
 </html>

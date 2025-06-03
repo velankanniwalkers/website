@@ -7,6 +7,7 @@
     <meta name="keywords" content="Our Lady of Good Health Church, Lakshmipuram, Chennai, Catholic Church, Church in Chennai, Lakshmipuram Church">
     <title>Arokia Matha Aalayam-Lakshmipuram,Chennai</title>
     <link rel="googleverification" href="google73ee9eaa93bf9a8f.html" type="text/html">
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJV7HLWJ24"></script>
 <script>
@@ -27,6 +28,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Link to JavaScript -->
     <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <nav>
@@ -80,9 +82,7 @@
         Thank You Lord for the Blood. Thank You Lord for the Cross. Thank you Lord for 50 Years of Grace.
     </div>
 </div>
-
-<!-- Count Display Section -->
-<section class="count-section">
+ <section class="count-section">
   <div class="count-container" style="display: flex; gap: 40px; justify-content: center; text-align: center;">
     <div class="count-item">
       <h2>Members</h2>
@@ -95,33 +95,45 @@
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script>
-  function animateCount(element, target, duration) {
-    let start = 0;
-    const startTime = performance.now();
+  const supabase = window.supabase.createClient(
+    'https://fdbesnvsaaugbkdkkmxz.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkYmVzbnZzYWF1Z2JrZGtrbXh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MzEyMjYsImV4cCI6MjA2NDUwNzIyNn0.hDev995HD6sOdyIkO4uoKjxCDPfhYFfnbSGLc1amlio'
+  );
 
-    function update(currentTime) {
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      const value = Math.floor(progress * target);
-      element.textContent = value;
-      if (progress < 1) requestAnimationFrame(update);
+  async function loadCounts() {
+    const { data, error } = await supabase
+      .from('counts')
+      .select('members, teams')
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (error) {
+      console.error('❌ Error fetching counts:', error.message);
+      return;
     }
 
-    requestAnimationFrame(update);
+    if (data && data.length > 0) {
+      document.getElementById('members-display').textContent = data[0].members ?? 0;
+      document.getElementById('teams-display').textContent = data[0].teams ?? 0;
+    } else {
+      console.warn('⚠️ No data found in "counts" table');
+    }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const members = parseInt(localStorage.getItem("count_members")) || 0;
-    const teams = parseInt(localStorage.getItem("count_teams")) || 0;
+  // Load data once initially
+  loadCounts();
 
-    const membersEl = document.getElementById("members-display");
-    const teamsEl = document.getElementById("teams-display");
-
-    animateCount(membersEl, members, 2000);
-    animateCount(teamsEl, teams, 2000);
-  });
+  // Enable real-time updates
+  supabase
+    .channel('realtime:counts')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'counts' }, (payload) => {
+      console.log('🔄 Data changed:', payload);
+      loadCounts();
+    })
+    .subscribe();
 </script>
-
 
     <!-- First Section: Single YouTube Live Stream -->
 <div class="youtube-live">
@@ -399,21 +411,6 @@
   window.addEventListener("storage", renderEvents);
 </script>
 
-
-  <!-- Video Section -->
-<section class="video-section">
-    <h2 class="video-heading">Watch Catholic Survey Video</h2>
-    <div class="video-container">
-        <iframe
-            width="100%"
-            height="400"
-            src="images/video.mp4"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            preload="metadata"  <!-- Added to load only metadata, not the whole video -->
-        ></iframe>
-    </div>
 </section>
 <!-- Announcements Section -->
 <section id="announcements" class="announcements-section">
@@ -422,34 +419,63 @@
   </h2>
 
   <div class="announcements-container">
-    <!-- English Announcements -->
+    <!-- English Announcement -->
     <div class="english-announcement">
       <h3 class="announcement-label">English Announcements</h3>
-      <div class="announcement" id="english-announcement-content"></div>
+      <div class="announcement">
+        <h3 class="announcement-title" id="english-title">Loading English Title...</h3>
+        <p class="announcement-info" id="english-info">Loading English Information...</p>
+      </div>
     </div>
 
-    <!-- Tamil Announcements -->
+    <!-- Tamil Announcement -->
     <div class="tamil-announcement">
       <h3 class="announcement-label">தமிழ் அறிவிப்புகள்</h3>
-      <div class="announcement" id="tamil-announcement-content"></div>
+      <div class="announcement">
+        <h3 class="announcement-title" id="tamil-title">தகவல் தலைப்பு ஏற்றப்படுகிறது...</h3>
+        <p class="announcement-info" id="tamil-info">தகவல் ஏற்றப்படுகிறது...</p>
+      </div>
     </div>
-
-    <!-- Text Announcement Box -->
-    <div class="text-announcement">
-      <h3 class="announcement-label">Announcement Label</h3>
-      <div class="announcement" id="label-announcement-content"></div>
-    </div>
-  </div>
 </section>
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  function loadAnnouncements() {
-    document.getElementById("english-announcement-content").innerHTML = localStorage.getItem("english_announcement") || "";
-    document.getElementById("tamil-announcement-content").innerHTML = localStorage.getItem("tamil_announcement") || "";
-    document.getElementById("label-announcement-content").innerHTML = localStorage.getItem("label_announcement") || "";
+  const supabaseClient = window.supabase.createClient(
+    'https://fdbesnvsaaugbkdkkmxz.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkYmVzbnZzYWF1Z2JrZGtrbXh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MzEyMjYsImV4cCI6MjA2NDUwNzIyNn0.hDev995HD6sOdyIkO4uoKjxCDPfhYFfnbSGLc1amlio'
+  );
+
+  async function loadAnnouncements() {
+    try {
+      const { data, error } = await supabaseClient
+        .from('announcements')
+        .select('lang, title, info')
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        console.error('Supabase error:', error);
+        return;
+      }
+
+      const english = data.find(a => a.lang.toLowerCase() === 'english');
+      const tamil = data.find(a => a.lang.toLowerCase() === 'tamil');
+      const label = data.find(a => a.lang.toLowerCase() === 'label');
+
+      document.getElementById('english-title').textContent = english?.title || 'No English Title Found';
+      document.getElementById('english-info').textContent = english?.info || 'No English Info';
+
+      document.getElementById('tamil-title').textContent = tamil?.title || 'தலைப்பு இல்லை';
+      document.getElementById('tamil-info').textContent = tamil?.info || 'தகவல் இல்லை';
+
+      document.getElementById('label-title').textContent = label?.title || 'No Label Title Found';
+      document.getElementById('label-info').textContent = label?.info || 'No Label Info';
+    } catch (e) {
+      console.error('Unexpected error:', e);
+    }
   }
 
-  document.addEventListener("DOMContentLoaded", loadAnnouncements);
+  document.addEventListener('DOMContentLoaded', loadAnnouncements);
 </script>
 
 
