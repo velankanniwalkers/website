@@ -1,12 +1,4 @@
-// Handle the close button
- const closeBtn = document.getElementById('closeBtn');
-  const popupOverlay = document.getElementById('popupOverlay');
-  const mainContent = document.getElementById('mainContent');
 
-  closeBtn.addEventListener('click', () => {
-    popupOverlay.style.display = 'none';
-    mainContent.style.display = 'block';
-  });
 
 document.addEventListener('DOMContentLoaded', function () {
     // --- Hamburger Navigation ---
