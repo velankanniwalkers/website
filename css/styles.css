@@ -99,6 +99,7 @@ nav {
     font-size: 0.8rem;
     margin: 0;
     text-align: center;
+    
 }
 /* Nav Links (Hidden on Mobile by Default) */
 .nav-links {
@@ -106,6 +107,7 @@ nav {
     list-style: none;
     margin: 0;
     padding: 0;
+    gap: 0.9rem;
 }
 
 .nav-links a {
@@ -128,7 +130,6 @@ nav {
     z-index: 1002;
 }
 
-/* Mobile Menu Styles */
 @media (max-width: 768px) {
     /* Hide regular nav links on mobile */
     .nav-links {
@@ -147,11 +148,11 @@ nav {
         position: fixed;
         top: 0;
         left: 0;
-        width: 250px;
+        width: 220px; /* smaller width */
         height: 100vh;
         background: #00239c;
-        padding: 5rem 1rem 1rem;
-        gap: 1.5rem;
+        padding: 4rem 1rem 1rem;
+        gap: 1.25rem;
         text-align: left;
         z-index: 1001;
         transform: translateX(-100%);
@@ -173,6 +174,40 @@ nav {
         to { transform: translateX(-100%); }
     }
     
+    /* Smaller nav link font size on mobile */
+    .nav-links.active a {
+        font-size: 1rem;
+        padding: 0.3rem 0;
+    }
+    
+    /* Reduce nav padding on mobile for smaller nav height */
+    nav {
+        padding: 0.2rem 0.5rem;
+    }
+    
+    /* Reduce logo size */
+    .church-logo {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Reduce gap between logo and text */
+    .logo-name-container {
+        gap: 0.15rem;
+    }
+    
+    /* Smaller church name font size */
+    .church-name {
+        font-size: 1rem;
+    }
+    
+    /* Smaller sub-text font size */
+    .sub-text {
+        font-size: 0.7rem;
+    }
+}
+
+    
     /* Overlay styles */
     .overlay {
         position: fixed;
@@ -191,7 +226,7 @@ nav {
         opacity: 1;
         pointer-events: all;
     }
-}
+
 
 /* Desktop Styles (Nav Links Visible) */
 @media (min-width: 769px) {
