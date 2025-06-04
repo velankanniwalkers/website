@@ -1,16 +1,12 @@
+// Handle the close button
+ const closeBtn = document.getElementById('closeBtn');
+  const popupOverlay = document.getElementById('popupOverlay');
+  const mainContent = document.getElementById('mainContent');
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const closeBtn = document.getElementById('closeOverlayBtn');
-    const overlay = document.getElementById('overlayBanner');
-    const content = document.getElementById('pageContent');
-
-    closeBtn.addEventListener('click', () => {
-      overlay.style.display = 'none';
-      content.style.display = 'block';
-    });
+  closeBtn.addEventListener('click', () => {
+    popupOverlay.style.display = 'none';
+    mainContent.style.display = 'block';
   });
-
-
 
 document.addEventListener('DOMContentLoaded', function () {
     // --- Hamburger Navigation ---
