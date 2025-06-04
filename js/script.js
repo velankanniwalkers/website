@@ -1,3 +1,17 @@
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const closeBtn = document.getElementById('closeOverlayBtn');
+    const overlay = document.getElementById('overlayBanner');
+    const content = document.getElementById('pageContent');
+
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      content.style.display = 'block';
+    });
+  });
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // --- Hamburger Navigation ---
     const hamburger = document.getElementById('hamburger');
