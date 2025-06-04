@@ -5,150 +5,553 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Custom styles for the Inter font and general layout */
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --secondary: #f9fafb;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --error: #ef4444;
+      --success: #10b981;
+    }
+    
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f3f4f6; /* Light gray background */
-      display: flex;
-      justify-content: center;
-      align-items: flex-start; /* Align to start to allow content to flow */
+      background-color: var(--secondary);
       min-height: 100vh;
-      padding: 2rem;
-      box-sizing: border-box;
+      color: var(--text-primary);
     }
+    
     .container {
-      background-color: #ffffff;
-      padding: 2.5rem;
-      border-radius: 0.75rem; /* rounded-xl */
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-      max-width: 900px; /* Max width for better readability */
-      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
     }
-    h1, h2 {
-      color: #1f2937; /* Dark gray text */
-      margin-bottom: 1.5rem;
-      text-align: center;
+    
+    .card {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
     }
-    form label {
-      font-weight: 500; /* Medium font weight */
-      color: #374151; /* Slightly lighter dark gray */
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
+    
+    .btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+    
+    .form-control {
+      margin-bottom: 1.25rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .form-input {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid #d1d5db; /* Light gray border */
-      border-radius: 0.5rem; /* rounded-md */
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-      box-sizing: border-box; /* Include padding in width */
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      transition: border-color 0.2s ease;
     }
-    button {
-      background-color: #4f46e5; /* Indigo 600 */
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem; /* rounded-md */
-      font-weight: 600; /* Semibold */
-      cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
-      width: 100%; /* Full width button */
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
-    button:hover {
-      background-color: #4338ca; /* Indigo 700 */
+    
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
     }
-    p {
+    
+    .status-message {
+      padding: 0.75rem;
+      border-radius: 0.5rem;
       margin-top: 1rem;
-      text-align: center;
-      color: #4b5563; /* Gray 600 */
-    }
-    .error-message {
-      color: #ef4444; /* Red 500 */
       font-weight: 500;
-      margin-top: 1rem;
     }
-    .hidden {
+    
+    .error {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+    }
+    
+    .success {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+    
+    .loading {
+      background-color: rgba(156, 163, 175, 0.1);
+      color: var(--text-secondary);
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 3px;
+    }
+    
+    .language-tab {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    
+    .tab-content {
       display: none;
     }
-    .announcement-info {
-  white-space: pre-line;
-}
-
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @media (min-width: 768px) {
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    
+    /* Animation for login transition */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    
+    /* Dashboard layout */
+    .dashboard-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 300px 1fr;
+      }
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .nav-item:hover {
+      color: var(--primary);
+    }
+    
+    .nav-item.active {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    
+    .nav-item i {
+      margin-right: 0.75rem;
+      width: 24px;
+      text-align: center;
+    }
+    
+    /* Main content */
+    .main-content {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Stats cards */
+    .stats-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    @media (min-width: 640px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .stat-title {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    /* Login card */
+    .login-card {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+    
+    .login-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+    
+    .login-logo {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .login-logo i {
+      font-size: 3rem;
+      color: var(--primary);
+    }
+    
+    /* Shake animation for login error */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    .animate-shake {
+      animation: shake 0.5s ease-in-out;
+    }
+    
+    /* Logout confirmation modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+    
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div id="login-section">
-      <h1 class="text-3xl font-bold mb-6">Admin Login</h1>
+    <!-- Login Section -->
+    <div id="login-section" class="card login-card">
+      <div class="login-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+        </svg>
+      </div>
+      <h1 class="login-title">Admin Login</h1>
       <form id="login-form" class="space-y-4">
-        <div>
-          <label for="username-input" class="block text-sm font-medium text-gray-700">Email:</label>
-          <input type="email" id="username-input" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        <div class="form-control">
+          <label for="username-input" class="form-label">Email</label>
+          <input type="email" id="username-input" required class="form-input" placeholder="Enter your email" />
         </div>
-        <div>
-          <label for="password-input" class="block text-sm font-medium text-gray-700">Password:</label>
-          <input type="password" id="password-input" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        <div class="form-control">
+          <label for="password-input" class="form-label">Password</label>
+          <input type="password" id="password-input" required class="form-input" placeholder="Enter your password" />
         </div>
-        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
-        <p id="login-status" class="text-red-500 text-center text-sm mt-2"></p>
+        <button type="submit" class="btn w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+          </svg>
+          Login
+        </button>
+        <p id="login-status" class="status-message hidden"></p>
       </form>
     </div>
 
-    <div id="admin-content" class="hidden">
-      <h1 class="text-3xl font-bold">Update Team and Member Counts</h1>
+    <!-- Admin Dashboard (hidden initially) -->
+    <div id="admin-content" class="hidden dashboard-grid">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h2 class="sidebar-title">Dashboard</h2>
+        <nav>
+          <div class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+            </svg>
+            Announcements
+          </div>
+          <div class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 12.094A5.973 5.973 0 004 15v1H1v-1a3 3 0 013.75-2.906z" />
+            </svg>
+            Members
+          </div>
+          <div class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />
+            </svg>
+            Teams
+          </div>
+          <div class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+            </svg>
+            Settings
+          </div>
+          <div class="nav-item" id="logout-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+            </svg>
+            Logout
+          </div>
+        </nav>
+      </div>
 
-      <form id="update-form" class="space-y-4">
-        <div>
-          <label for="members-input" class="block text-sm font-medium text-gray-700">Members:</label>
-          <input type="number" id="members-input" required min="0" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <div>
-          <label for="teams-input" class="block text-sm font-medium text-gray-700">Teams:</label>
-          <input type="number" id="teams-input" required min="0" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Counts</button>
-      </form>
-      <p id="status" class="text-center text-sm mt-2"></p>
-
-      <h1 class="text-3xl font-bold mt-8">Admin - Update Announcements</h1>
-
-      <form id="announcement-form" class="space-y-4">
-        <h2 class="text-2xl font-semibold mt-6">தமிழ் அறிவிப்பு</h2>
-        <div>
-          <label for="english-title" class="block text-sm font-medium text-gray-700">Title:</label>
-          <input type="text" id="english-title" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <div>
-          <label for="english-info" class="block text-sm font-medium text-gray-700">Info:</label>
-          <textarea id="english-info" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3 class="stat-title">Total Members</h3>
+            <p class="stat-value" id="members-stat">0</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-title">Total Teams</h3>
+            <p class="stat-value" id="teams-stat">0</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-title">English Announcements</h3>
+            <p class="stat-value" id="english-stat">0</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-title">Tamil Announcements</h3>
+            <p class="stat-value" id="tamil-stat">0</p>
+          </div>
         </div>
 
-        <h2 class="text-2xl font-semibold mt-6">English Announcements</h2>
-        <div>
-          <label for="tamil-title" class="block text-sm font-medium text-gray-700">தலைப்பு:</label>
-          <input type="text" id="tamil-title" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <div>
-          <label for="tamil-info" class="block text-sm font-medium text-gray-700">தகவல்:</label>
-          <textarea id="tamil-info" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+        <!-- Update Counts Section -->
+        <div class="mb-8">
+          <h2 class="section-title">Update Counts</h2>
+          <form id="update-form" class="card p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-control">
+                <label for="members-input" class="form-label">Members Count</label>
+                <input type="number" id="members-input" required min="0" class="form-input" placeholder="Enter members count" />
+              </div>
+              <div class="form-control">
+                <label for="teams-input" class="form-label">Teams Count</label>
+                <input type="number" id="teams-input" required min="0" class="form-input" placeholder="Enter teams count" />
+              </div>
+            </div>
+            <button type="submit" class="btn mt-4 w-full md:w-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+              </svg>
+              Update Counts
+            </button>
+            <p id="status" class="status-message hidden mt-4"></p>
+          </form>
         </div>
 
-        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Announcements</button>
-      </form>
-      <p id="announcement-status" class="text-center text-sm mt-2"></p>
+        <!-- Announcements Section -->
+        <div>
+          <h2 class="section-title">Manage Announcements</h2>
+          
+          <!-- Language Tabs -->
+          <div class="language-tab">
+            <div class="tab-btn active" data-tab="english">English</div>
+            <div class="tab-btn" data-tab="tamil">தமிழ்</div>
+          </div>
+          
+          <!-- Announcement Form -->
+          <form id="announcement-form" class="card p-6">
+            <!-- English Tab Content -->
+            <div class="tab-content active" id="english-tab">
+              <div class="form-control">
+                <label for="english-title" class="form-label">Title</label>
+                <input type="text" id="english-title" required class="form-input" placeholder="Enter announcement title" />
+              </div>
+              <div class="form-control">
+                <label for="english-info" class="form-label">Content</label>
+                <textarea id="english-info" rows="6" required class="form-input form-textarea" placeholder="Enter announcement content"></textarea>
+              </div>
+            </div>
+            
+            <!-- Tamil Tab Content -->
+            <div class="tab-content" id="tamil-tab">
+              <div class="form-control">
+                <label for="tamil-title" class="form-label">தலைப்பு</label>
+                <input type="text" id="tamil-title" required class="form-input" placeholder="அறிவிப்பு தலைப்பை உள்ளிடவும்" />
+              </div>
+              <div class="form-control">
+                <label for="tamil-info" class="form-label">உள்ளடக்கம்</label>
+                <textarea id="tamil-info" rows="6" required class="form-input form-textarea" placeholder="அறிவிப்பு உள்ளடக்கத்தை உள்ளிடவும்"></textarea>
+              </div>
+            </div>
+            
+            <button type="submit" class="btn mt-6 w-full md:w-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+              Update Announcements
+            </button>
+            <p id="announcement-status" class="status-message hidden mt-4"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logout-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 class="modal-title">Confirm Logout</h3>
+      <p>Are you sure you want to logout from the admin dashboard?</p>
+      <div class="modal-actions">
+        <button id="cancel-logout" class="btn btn-outline">Cancel</button>
+        <button id="confirm-logout" class="btn">Logout</button>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Initialize Supabase client (kept as per your original code for data operations)
+    // Initialize Supabase client
     const supabaseUrl = 'https://fdbesnvsaaugbkdkkmxz.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkYmVzbnZzYWF1Z2JrZGtrbXh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MzEyMjYsImV4cCI6MjA2NDUwNzIyNn0.hDev995HD6sOdyIkO4uoKjxCDPfhYFfnbSGLc1amlio';
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // --- Login Elements ---
+    // --- DOM Elements ---
     const loginSection = document.getElementById('login-section');
     const adminContent = document.getElementById('admin-content');
     const loginForm = document.getElementById('login-form');
@@ -156,13 +559,20 @@
     const passwordInput = document.getElementById('password-input');
     const loginStatusP = document.getElementById('login-status');
 
-    // --- Admin Dashboard Elements (from your original code) ---
+    // Stats elements
+    const membersStat = document.getElementById('members-stat');
+    const teamsStat = document.getElementById('teams-stat');
+    const englishStat = document.getElementById('english-stat');
+    const tamilStat = document.getElementById('tamil-stat');
+
+    // Counts form
     const countsRowId = 'a1d46fc9-df89-4171-98dc-700bd90f249e';
     const form = document.getElementById('update-form');
     const membersInput = document.getElementById('members-input');
     const teamsInput = document.getElementById('teams-input');
     const statusP = document.getElementById('status');
 
+    // Announcements
     const tamilId = 'a355ab9c-8968-4b94-a665-90111255b374';
     const englishId = '3c779815-d3aa-41c0-a5ce-1261251451e1';
     const englishTitle = document.getElementById('english-title');
@@ -171,10 +581,71 @@
     const tamilInfo = document.getElementById('tamil-info');
     const announcementStatus = document.getElementById('announcement-status');
 
-    // --- Login Logic ---
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault(); // Prevent default form submission
+    // Tab elements
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
 
+    // Logout elements
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogoutBtn = document.getElementById('cancel-logout');
+    const confirmLogoutBtn = document.getElementById('confirm-logout');
+
+    // --- Event Listeners ---
+    loginForm.addEventListener('submit', handleLogin);
+    form.addEventListener('submit', handleCountsUpdate);
+    document.getElementById('announcement-form').addEventListener('submit', handleAnnouncementsUpdate);
+    
+    // Tab switching
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        switchTab(tabId);
+      });
+    });
+
+    // Logout functionality
+    logoutBtn.addEventListener('click', () => {
+      logoutModal.classList.add('active');
+    });
+
+    cancelLogoutBtn.addEventListener('click', () => {
+      logoutModal.classList.remove('active');
+    });
+
+    confirmLogoutBtn.addEventListener('click', handleLogout);
+
+    // Close modal when clicking outside
+    logoutModal.addEventListener('click', (e) => {
+      if (e.target === logoutModal) {
+        logoutModal.classList.remove('active');
+      }
+    });
+
+    // --- Functions ---
+    function switchTab(tabId) {
+      // Update active tab button
+      tabBtns.forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      // Show corresponding content
+      tabContents.forEach(content => {
+        if (content.id === `${tabId}-tab`) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      
       const username = usernameInput.value.trim();
       const password = passwordInput.value.trim();
 
@@ -182,24 +653,86 @@
       const correctUsername = 'velankanniwalkerssocialservice@gmail.com';
       const correctPassword = 'avemariavwss';
 
+      // Show loading state
+      loginStatusP.textContent = 'Logging in...';
+      loginStatusP.className = 'status-message loading';
+      loginStatusP.classList.remove('hidden');
+
+      // Simulate network delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 800));
+
       if (username === correctUsername && password === correctPassword) {
-        loginStatusP.textContent = ''; // Clear any previous error message
-        loginSection.classList.add('hidden'); // Hide login section
-        adminContent.classList.remove('hidden'); // Show admin content
-
-        // Load all data after successful login
-        loadCurrentCounts();
-        loadAnnouncements();
+        // Successful login
+        loginStatusP.textContent = 'Login successful! Redirecting...';
+        loginStatusP.className = 'status-message success';
+        
+        // Hide login and show admin content with animation
+        setTimeout(() => {
+          loginSection.classList.add('hidden');
+          adminContent.classList.remove('hidden');
+          adminContent.classList.add('fade-in');
+          
+          // Load all data
+          loadCurrentCounts();
+          loadAnnouncements();
+        }, 1000);
       } else {
-        loginStatusP.textContent = 'Invalid username or password.';
-        loginStatusP.classList.add('error-message'); // Add error styling
+        // Failed login
+        loginStatusP.textContent = 'Invalid email or password. Please try again.';
+        loginStatusP.className = 'status-message error';
+        
+        // Shake animation for error
+        loginForm.classList.add('animate-shake');
+        setTimeout(() => {
+          loginForm.classList.remove('animate-shake');
+        }, 500);
       }
-    });
+    }
 
-    // --- Supabase Data Loading and Update Functions (from your original code) ---
+    function handleLogout() {
+      // Close the modal
+      logoutModal.classList.remove('active');
+      
+      // Show logout confirmation
+      const logoutStatus = document.createElement('div');
+      logoutStatus.textContent = 'Logging out...';
+      logoutStatus.className = 'status-message loading';
+      logoutStatus.style.position = 'fixed';
+      logoutStatus.style.top = '20px';
+      logoutStatus.style.right = '20px';
+      logoutStatus.style.zIndex = '1000';
+      document.body.appendChild(logoutStatus);
+
+      // Simulate logout process
+      setTimeout(() => {
+        logoutStatus.textContent = 'Logged out successfully!';
+        logoutStatus.className = 'status-message success';
+        
+        // Hide admin content and show login after delay
+        setTimeout(() => {
+          adminContent.classList.remove('fade-in');
+          adminContent.classList.add('hidden');
+          loginSection.classList.remove('hidden');
+          
+          // Reset form fields
+          usernameInput.value = '';
+          passwordInput.value = '';
+          loginStatusP.classList.add('hidden');
+          
+          // Remove logout status message
+          setTimeout(() => {
+            logoutStatus.remove();
+          }, 1000);
+        }, 1000);
+      }, 800);
+    }
 
     // Load current counts from Supabase
     async function loadCurrentCounts() {
+      statusP.textContent = 'Loading counts...';
+      statusP.className = 'status-message loading';
+      statusP.classList.remove('hidden');
+
       try {
         const { data, error } = await supabaseClient
           .from('counts')
@@ -207,34 +740,36 @@
           .eq('id', countsRowId)
           .single();
 
-        if (error) {
-          statusP.textContent = 'Error loading counts: ' + error.message;
-          statusP.classList.add('error-message');
-          return;
-        }
+        if (error) throw error;
 
         membersInput.value = data.members ?? 0;
         teamsInput.value = data.teams ?? 0;
-        statusP.textContent = ''; // Clear status after load
-      } catch (e) {
-        statusP.textContent = 'An unexpected error occurred while loading counts.';
-        statusP.classList.add('error-message');
-        console.error(e);
+        
+        // Update stats display
+        membersStat.textContent = data.members ?? 0;
+        teamsStat.textContent = data.teams ?? 0;
+        
+        statusP.classList.add('hidden');
+      } catch (error) {
+        statusP.textContent = 'Error loading counts: ' + error.message;
+        statusP.className = 'status-message error';
       }
     }
 
     // Handle counts form submit
-    form.addEventListener('submit', async (e) => {
+    async function handleCountsUpdate(e) {
       e.preventDefault();
-      statusP.textContent = 'Updating...';
-      statusP.classList.remove('error-message'); // Clear error styling
+      
+      statusP.textContent = 'Updating counts...';
+      statusP.className = 'status-message loading';
+      statusP.classList.remove('hidden');
 
       const members = parseInt(membersInput.value);
       const teams = parseInt(teamsInput.value);
 
       if (isNaN(members) || isNaN(teams) || members < 0 || teams < 0) {
         statusP.textContent = 'Please enter valid non-negative numbers for members and teams.';
-        statusP.classList.add('error-message');
+        statusP.className = 'status-message error';
         return;
       }
 
@@ -244,57 +779,65 @@
           .update({ members, teams })
           .eq('id', countsRowId);
 
-        if (error) {
-          statusP.textContent = 'Update failed: ' + error.message;
-          statusP.classList.add('error-message');
-          return;
-        }
+        if (error) throw error;
 
+        // Update stats display
+        membersStat.textContent = members;
+        teamsStat.textContent = teams;
+        
         statusP.textContent = 'Counts updated successfully!';
-        statusP.classList.remove('error-message');
-      } catch (e) {
-        statusP.textContent = 'An unexpected error occurred during counts update.';
-        statusP.classList.add('error-message');
-        console.error(e);
+        statusP.className = 'status-message success';
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          statusP.classList.add('hidden');
+        }, 3000);
+      } catch (error) {
+        statusP.textContent = 'Update failed: ' + error.message;
+        statusP.className = 'status-message error';
       }
-    });
+    }
 
     // Load announcements data from Supabase
     async function loadAnnouncements() {
+      announcementStatus.textContent = 'Loading announcements...';
+      announcementStatus.className = 'status-message loading';
+      announcementStatus.classList.remove('hidden');
+
       try {
         const { data, error } = await supabaseClient
           .from('announcements')
           .select('*')
           .in('id', [tamilId, englishId]);
 
-        if (error) {
-          announcementStatus.textContent = 'Error loading announcements: ' + error.message;
-          announcementStatus.classList.add('error-message');
-          return;
-        }
+        if (error) throw error;
 
         data.forEach(row => {
           if (row.id === englishId) {
             englishTitle.value = row.title || '';
             englishInfo.value = row.info || '';
+            englishStat.textContent = row.title ? '1' : '0';
           } else if (row.id === tamilId) {
             tamilTitle.value = row.title || '';
             tamilInfo.value = row.info || '';
+            tamilStat.textContent = row.title ? '1' : '0';
           }
         });
-        announcementStatus.textContent = ''; // Clear status after load
-      } catch (e) {
-        announcementStatus.textContent = 'An unexpected error occurred while loading announcements.';
-        announcementStatus.classList.add('error-message');
-        console.error(e);
+        
+        announcementStatus.classList.add('hidden');
+      } catch (error) {
+        announcementStatus.textContent = 'Error loading announcements: ' + error.message;
+        announcementStatus.className = 'status-message error';
       }
     }
 
     // Handle announcements form submit
-    document.getElementById('announcement-form').addEventListener('submit', async (e) => {
+    async function handleAnnouncementsUpdate(e) {
       e.preventDefault();
-      announcementStatus.textContent = 'Updating...';
-      announcementStatus.classList.remove('error-message'); // Clear error styling
+      
+      announcementStatus.textContent = 'Updating announcements...';
+      announcementStatus.className = 'status-message loading';
+      announcementStatus.classList.remove('hidden');
 
       const now = new Date().toISOString();
 
@@ -313,11 +856,9 @@
         }
       ];
 
-      let success = true;
-      let errorMessage = '';
-
-      for (const update of updates) {
-        try {
+      try {
+        // Update each announcement
+        for (const update of updates) {
           const { error } = await supabaseClient
             .from('announcements')
             .update({
@@ -327,31 +868,29 @@
             })
             .eq('id', update.id);
 
-          if (error) {
-            success = false;
-            errorMessage = 'Error updating ' + (update.id === englishId ? 'English' : 'Tamil') + ' announcement: ' + error.message;
-            break;
-          }
-        } catch (e) {
-          success = false;
-          errorMessage = 'An unexpected error occurred during announcement update.';
-          console.error(e);
-          break;
+          if (error) throw error;
         }
-      }
 
-      if (success) {
+        // Update stats
+        englishStat.textContent = updates[0].title ? '1' : '0';
+        tamilStat.textContent = updates[1].title ? '1' : '0';
+        
         announcementStatus.textContent = 'Announcements updated successfully!';
-        announcementStatus.classList.remove('error-message');
-      } else {
-        announcementStatus.textContent = errorMessage;
-        announcementStatus.classList.add('error-message');
+        announcementStatus.className = 'status-message success';
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          announcementStatus.classList.add('hidden');
+        }, 3000);
+      } catch (error) {
+        announcementStatus.textContent = 'Error updating announcements: ' + error.message;
+        announcementStatus.className = 'status-message error';
       }
-    });
+    }
 
-    // Initial state: Hide admin content until logged in
+    // Initial state
     adminContent.classList.add('hidden');
-    loginSection.classList.remove('hidden'); // Ensure login section is visible initially
+    loginSection.classList.remove('hidden');
   </script>
 </body>
 </html>
