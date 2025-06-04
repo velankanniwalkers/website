@@ -1,30 +1,29 @@
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Hamburger Navigation
+    // --- Hamburger Navigation ---
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
     const overlay = document.getElementById('overlay');
     const navItems = document.querySelectorAll('#nav-links a');
 
-    hamburger.addEventListener('click', function () {
-        navLinks.classList.toggle('show');
-        navLinks.classList.toggle('active');
-        overlay.classList.toggle('show');
+    hamburger?.addEventListener('click', function () {
+        navLinks?.classList.toggle('show');
+        navLinks?.classList.toggle('active');
+        overlay?.classList.toggle('show');
     });
 
-    overlay.addEventListener('click', function () {
-        navLinks.classList.remove('show', 'active');
-        overlay.classList.remove('show');
+    overlay?.addEventListener('click', function () {
+        navLinks?.classList.remove('show', 'active');
+        overlay?.classList.remove('show');
     });
 
     navItems.forEach(item => {
         item.addEventListener('click', function () {
-            navLinks.classList.remove('show', 'active');
-            overlay.classList.remove('show');
+            navLinks?.classList.remove('show', 'active');
+            overlay?.classList.remove('show');
         });
     });
 
-    // Image Slider (auto and manual)
+    // --- Image Slider (auto and manual) ---
     const slides = document.querySelector('.slides');
     const slideImages = document.querySelectorAll('.slides img');
     const slideWidth = slideImages[0]?.clientWidth || 0;
@@ -47,10 +46,21 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('mouseleave', () => autoSlideInterval = setInterval(showNextSlide, 3000));
     });
 
-    document.querySelector('.next-button')?.addEventListener('click', showNextSlide);
-    document.querySelector('.prev-button')?.addEventListener('click', showPrevSlide);
+    document.querySelector('.next-button')?.addEventListener('click', () => {
+        showNextSlide();
+        restartAutoSlide();
+    });
+    document.querySelector('.prev-button')?.addEventListener('click', () => {
+        showPrevSlide();
+        restartAutoSlide();
+    });
 
-    // Dot Slider (Parish Slider)
+    function restartAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(showNextSlide, 3000);
+    }
+
+    // --- Dot Slider (fade/slideshow) ---
     const dotSlides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
     const dotPrev = document.querySelector('.slider-prev');
@@ -108,55 +118,11 @@ document.addEventListener('DOMContentLoaded', function () {
     dotSlider?.addEventListener('mouseenter', stopDotSlider);
     dotSlider?.addEventListener('mouseleave', startDotSlider);
 
+    // Initialize dot slider
     showDotSlide(0);
     startDotSlider();
 
-    // Priests Slider
-    const priestsSlider = document.querySelector('.priests-slider');
-const priestsSlides = document.querySelectorAll('.priests-slider .slide');
-let priestIndex = 0;
-const totalPriests = priestsSlides.length;
-
-function movePriestSlider() {
-  priestsSlider.style.transform = `translateX(-${priestIndex * 100}%)`;
-}
-
-function autoPriestSlide() {
-  priestIndex = (priestIndex + 1) % totalPriests;
-  movePriestSlider();
-}
-
-let priestInterval = setInterval(autoPriestSlide, 5000);
-
-document.querySelector('.prev-button')?.addEventListener('click', () => {
-  priestIndex = (priestIndex - 1 + totalPriests) % totalPriests;
-  movePriestSlider();
-  restartPriestSlider();
-});
-
-document.querySelector('.next-button')?.addEventListener('click', () => {
-  priestIndex = (priestIndex + 1) % totalPriests;
-  movePriestSlider();
-  restartPriestSlider();
-});
-
-function restartPriestSlider() {
-  clearInterval(priestInterval);
-  priestInterval = setInterval(autoPriestSlide, 5000);
-}
-
-
-<lottie-player
-    src="https://assets1.lottiefiles.com/packages/lf20_0yfsb3a1.json"
-    background="transparent"
-    speed="1"
-    style="width: 50px; height: 50px;"
-    loop
-    autoplay>
-</lottie-player>
-
-
-    // Read More Button
+    // --- Read More Button ---
     const readMoreBtn = document.getElementById('read-more-btn');
     const historyContent = document.querySelector('.history-content');
 
@@ -165,7 +131,7 @@ function restartPriestSlider() {
         readMoreBtn.textContent = historyContent?.classList.contains('expanded') ? 'Read Less' : 'Read More';
     });
 
-    // Show News Dialog
+    // --- Show News Dialog ---
     const showNewsBtn = document.querySelector('.show-news-btn');
     const dialog = document.getElementById('news-dialog');
     const closeBtn = document.querySelector('.close-btn');
@@ -179,7 +145,7 @@ function restartPriestSlider() {
         }
     });
 
-    // Scroll to Top
+    // --- Scroll to Top ---
     const backToTopBtn = document.getElementById('backToTopBtn');
 
     window.addEventListener('scroll', function () {
@@ -198,9 +164,4 @@ function restartPriestSlider() {
             document.body.scrollTop = 0;
         }
     };
-
-
 });
-
-
-
