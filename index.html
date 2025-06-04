@@ -7,6 +7,11 @@
     <meta name="keywords" content="Our Lady of Good Health Church, Lakshmipuram, Chennai, Catholic Church, Church in Chennai, Lakshmipuram Church">
     <title>Arokia Matha Aalayam-Lakshmipuram,Chennai</title>
     <link rel="googleverification" href="google73ee9eaa93bf9a8f.html" type="text/html">
+    <!-- In your <head> section -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<!-- Font Awesome (include in <head> if not already) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJV7HLWJ24"></script>
@@ -240,21 +245,22 @@
      
     </div>
 </section>
+<div class="profile-container">
+  <div class="image-container">
+    <img src="images/lancyjacobfounder.jpg" alt="Mr. Lancy Jacob">
+  </div>
+  <div class="priest-info">
+    <h3>Mr. Lancy Jacob</h3>
+    <p>Founder - VWSS</p>
+  </div>
+</div>
+
 <!-- Image Slider Section -->
 <section class="image-slider-section">
-  <h2 class="slider-heading">Our Founders</h2>
+  <h2 class="slider-heading">Our Leaders</h2>
   <div class="slider-container">
     <div class="slider-wrapper">
-      <!-- Slide 1 -->
-      <div class="slide active">
-        <div class="round-image-container">
-          <img src="images/lancyjacobfounder.jpg" alt="Mr. Lancy Jacob">
-        </div>
-        <div class="priest-info">
-          <h3>Mr. Lancy Jacob</h3>
-          <p>Founder-VWSS</p>
-        </div>
-      </div>
+
       <!-- Slide 2 -->
       <div class="slide">
         <div class="round-image-container">
@@ -364,81 +370,112 @@
     Prayer Request
 </a>
 </section>
- <!-- Mass Timings Section -->
+<!-- Mass Timings Section -->
 <section id="Mass Timings" class="mass-timings-section">
     <h2 class="mass-timings-heading">
         <i class="fas fa-church"></i>
        <!-- Church icon -->
-        Event Timings
+        Mass Timings
     </h2>
-  <div class="mass-timings-container">
-  <div class="timings english-timings">
-    <h3>English Events</h3>
-    <ul class="english-events"></ul>
-  </div>
-  <div class="timings tamil-timings">
-    <h3>தமிழ் நிகழ்வுகள்</h3>
-    <ul class="tamil-events"></ul>
-  </div>
-</div>
-
-<script>
-  function renderEvents() {
-    const eventsEn = JSON.parse(localStorage.getItem("events_english") || "[]");
-    const eventsTa = JSON.parse(localStorage.getItem("events_tamil") || "[]");
-
-    const englishContainer = document.querySelector(".english-events");
-    const tamilContainer = document.querySelector(".tamil-events");
-
-    englishContainer.innerHTML = "";
-    tamilContainer.innerHTML = "";
-
-    // Only take the first 5
-    eventsEn.slice(0, 5).forEach(ev => {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${ev.date}:</strong> ${ev.info}`;
-      englishContainer.appendChild(li);
-    });
-
-    eventsTa.slice(0, 5).forEach(ev => {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${ev.date}:</strong> ${ev.info}`;
-      tamilContainer.appendChild(li);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", renderEvents);
-  window.addEventListener("storage", renderEvents);
-</script>
-
-</section>
+    <div class="mass-timings-container">
+        <!-- English Timings -->
+        <div class="timings english-timings">
+            <ul>
+                <li><strong>Sundays:</strong></li>
+                <li>6:15 AM – Tamil Mass</li>
+                <li>8:00 AM – Tamil Mass</li>
+                <li>10:00 AM – English Mass</li>
+                <li>6:00 PM – Tamil Mass</li>
+                <li><strong>Weekdays:</strong></li>
+                <li><strong>Monday:</strong></li>
+                <li>6:30 AM – Tamil Mass</li>
+                <li><strong>Tuesday, Wednesday, Thursday, Saturday:</strong></li>
+                <li>6:00 PM – Rosary</li>
+                <li>6:30 PM – Tamil Mass</li>
+                <li><strong>Friday:</strong></li>
+                <li>6:00 PM – Rosary</li>
+                <li>6:30 PM – Adoration</li>
+                <li>7:00 PM – Tamil Mass</li>
+                <li><strong>Special Novenas:</strong></li>
+                <li><strong>First Friday:</strong></li>
+                <li>6:00 PM – Rosary</li>
+                <li>6:30 PM – Adoration</li>
+                <li>7:30 PM – Mass</li>
+                <li><strong>First Saturday:</strong></li>
+                <li>6:00 PM – Rosary</li>
+                <li>6:30 PM – Novena Mass</li>
+                <li>Followed by:</li>
+                <li>Car Procession</li>
+                <li>Food Sharing</li>
+            </ul>
+        </div>
+        
+        <!-- Tamil Timings -->
+        <div class="timings tamil-timings">
+            <ul>
+                <li><strong>ஞாயிற்றுக்கிழமை:</strong></li>
+                <li>காலை 6:15 மணி – தமிழ் திருப்பலி</li>
+                <li>காலை 8:00 மணி – தமிழ் திருப்பலி</li>
+                <li>காலை 10:00 மணி – ஆங்கில திருப்பலி</li>
+                <li>மாலை 6:00 மணி – தமிழ் திருப்பலி</li>
+                <li><strong>வார நாட்கள்:</strong></li>
+                <li><strong>திங்கள்:</strong></li>
+                <li>காலை 6:30 மணி – தமிழ் திருப்பலி</li>
+                <li><strong>செவ்வாய், புதன், வியாழன், சனி:</strong></li>
+                <li>மாலை 6:00 மணி – ரோசரி</li>
+                <li>மாலை 6:30 மணி – தமிழ் திருப்பலி</li>
+                <li><strong>வெள்ளி:</strong></li>
+                <li>மாலை 6:00 மணி – ரோசரி</li>
+                <li>மாலை 6:30 மணி – ஆராதனை</li>
+                <li>மாலை 7:00 மணி – தமிழ் திருப்பலி</li>
+                <li><strong>சிறப்பு நோவினாக்கள்:</strong></li>
+                <li><strong>முதல் வெள்ளி:</strong></li>
+                <li>மாலை 6:00 மணி – ரோசரி</li>
+                <li>மாலை 6:30 மணி – ஆராதனை</li>
+                <li>மாலை 7:30 மணி – திருப்பலி</li>
+                <li><strong>முதல் சனி:</strong></li>
+                <li>மாலை 6:00 மணி – ரோசரி</li>
+                <li>மாலை 6:30 மணி – நோவினா திருப்பலி</li>
+                <li>அதனைத் தொடர்ந்து:</li>
+                <li>தெர்ஊர்வலம்</li>
+                <li>உணவு பகிர்வு</li>
+            </ul>
+        </div>
+    </div>
+    </section>
 <!-- Announcements Section -->
-<section id="announcements" class="announcements-section">
-  <h2 class="announcements-heading">
-    <i class="fas fa-bullhorn"></i> Announcements
-  </h2>
+<!-- Announcements Heading -->
+<h2 class="announcements-heading">
+  <i class="fas fa-bullhorn"></i> Announcements
+</h2>
 
-  <div class="announcements-container">
-    <!-- English Announcement -->
-    <div class="english-announcement">
-      <h3 class="announcement-label">English Announcements</h3>
+<!-- Announcements Book Container -->
+<section id="announcements" class="book">
+  <div class="pages">
+
+    <!-- Left Page: English -->
+    <div class="page english-announcement">
+      <h3>English Announcements</h3>
       <div class="announcement">
-        <h3 class="announcement-title" id="english-title">Loading English Title...</h3>
+        <h4 class="announcement-title" id="english-title">Loading English Title...</h4>
         <p class="announcement-info" id="english-info">Loading English Information...</p>
       </div>
     </div>
 
-    <!-- Tamil Announcement -->
-    <div class="tamil-announcement">
-      <h3 class="announcement-label">தமிழ் அறிவிப்புகள்</h3>
+    <!-- Right Page: Tamil -->
+    <div class="page tamil-announcement">
+      <h3>தமிழ் அறிவிப்புகள்</h3>
       <div class="announcement">
-        <h3 class="announcement-title" id="tamil-title">தகவல் தலைப்பு ஏற்றப்படுகிறது...</h3>
+        <h4 class="announcement-title" id="tamil-title">தகவல் தலைப்பு ஏற்றப்படுகிறது...</h4>
         <p class="announcement-info" id="tamil-info">தகவல் ஏற்றப்படுகிறது...</p>
       </div>
     </div>
+
+  </div>
 </section>
 
-<!-- Supabase -->
+
+<!-- Supabase JS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const supabaseClient = window.supabase.createClient(
@@ -460,16 +497,12 @@
 
       const english = data.find(a => a.lang.toLowerCase() === 'english');
       const tamil = data.find(a => a.lang.toLowerCase() === 'tamil');
-      const label = data.find(a => a.lang.toLowerCase() === 'label');
 
       document.getElementById('english-title').textContent = english?.title || 'No English Title Found';
       document.getElementById('english-info').textContent = english?.info || 'No English Info';
 
       document.getElementById('tamil-title').textContent = tamil?.title || 'தலைப்பு இல்லை';
       document.getElementById('tamil-info').textContent = tamil?.info || 'தகவல் இல்லை';
-
-      document.getElementById('label-title').textContent = label?.title || 'No Label Title Found';
-      document.getElementById('label-info').textContent = label?.info || 'No Label Info';
     } catch (e) {
       console.error('Unexpected error:', e);
     }
@@ -587,7 +620,7 @@ Email: admissiondbca@gmail.com
     <div class="footer-container">
         <!-- First Column: Logo with Link -->
         <div class="footer-column">
-            <a href="https://www.ourladyofgoodhealth-lakshmipuram.com" target="_blank">
+            <a href="https://www.velankanniwalkerssocialservice.com" target="_blank">
                 <img src="images/logo.jpg" alt="Footer Logo" class="footer-logo">
             </a>
         </div>
@@ -596,14 +629,14 @@ Email: admissiondbca@gmail.com
         <div class="footer-column">
             <h3 style="color:  #D4AF37;">Quick Links</h3>
             <ul class="quick-links">
-                <li><a href="https://www.ourladyofgoodhealth-lakshmipuram.com">Home</a></li>
+                <li><a href="https://www.velankanniwalkerssocialservice.com">Home</a></li>
                 <li><a href="#announcements">Announcements</a></li>
-                <li><a href="#Mass Timings">Mass Timings</a></li>
+                <li><a href="#Mass Timings">Event Timings</a></li>
                 <li><a href="#history">History</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="ministries.html">Our Ministries</a></li>
                 <li><a href="#prayerrequest">Prayer Request</a></li>
-                <li><a href="#ourpriests">Our Priests</a></li>
+                <li><a href="#ourpriests">Our Leaders</a></li>
                 <li><a href="#ministries">Ministries</a></li>
                
                 <li><a href="#contactus">Contact Us</a></li>
@@ -616,7 +649,7 @@ Email: admissiondbca@gmail.com
             <h3 style="color:  #D4AF37;">Location</h3>
             <div class="map-container">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.4945928439515!2d80.2086367!3d13.1311722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526546090a6ca9%3A0x5b3afe58aa798135!2sArokia%20Madha%20Church%2C%20Lakshmipuram!5e0!3m2!1sen!2sin!4v1744298462878!5m2!1sen!2sin" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.123456789!2d80.2851589!3d13.1001461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526f5c874b56f5%3A0x13cfa62d1aa3078f!2s1st%20floor%2C%2099%2C%20St%20Xavier%20St%2C%20Parrys%2C%20George%20Town%2C%20Chennai%2C%20Tamil%20Nadu%20600108!5e0!3m2!1sen!2sin!4v1623456789012!5m2!1sen!2sin" 
                     width="100%"
                     height="200"
                     style="border:0;"
@@ -641,7 +674,7 @@ Email: admissiondbca@gmail.com
             <h3 style="color:  #D4AF37">Contact Us</h3>
             <ul class="contact-info">
                 <li><i class="fas fa-map-marker-alt"></i> Lakshmipuram, Chennai - 99</li>
-                <li><i class="fas fa-envelope"></i> arokiamadhachlpmch99@gmail.com</li>
+                <li><i class="fas fa-envelope"></i> </li>
                 <li><i class="fas fa-phone"></i> +91 86376 04340</li>
                
             </ul>

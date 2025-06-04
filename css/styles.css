@@ -466,6 +466,21 @@ nav {
 }
 
 /* Extra small devices */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Center contents horizontally */
+  text-align: center;       /* Center text */
+  margin-top: 20px;
+}
+
+.image-container img {
+  width: 220px;             /* Slightly bigger than square */
+  height: 260px;            /* Slightly taller than wide */
+  object-fit: cover;
+  border: 4px solid #0072CE; /* Pantone 285 C */
+  border-radius: 0;         /* Keep corners sharp (no rounding) */
+}
 
 
 /* Our Priests Section */
@@ -757,138 +772,222 @@ nav {
     background-color: #D4AF37; /* Darker red on hover */
 }
 
-
-/* Announcements Section Styles */
+/* Announcements Section Base Styling */
 .announcements-section {
-    padding: 2rem;
+    padding: 2rem 1rem;
     margin: 2rem 0;
     text-align: center;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: #fefcf5;
+    color: #2e2e2e;
 }
 
+/* Heading */
 .announcements-heading {
-    color: #00239c; /* Brown text color */
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto 2rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 0.5rem; /* Space between icon and text */
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #1a237e; /* darker blue */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+    user-select: none;
 }
 
 .announcements-heading i {
-    font-size: 1.5rem; /* Adjust icon size */
-    color: #00239c; /* Brown icon color */
+    font-size: 1.8rem;
+    color: #1a237e;
+    transform: translateY(2px);
 }
 
-/* Announcements Container */
-.announcements-container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
+/* Book Container */
+.book {
+    width: 850px; /* desktop width */
+    height: 500px;
     margin: 0 auto;
-    gap: 2rem;
+    perspective: 1400px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #f5e6b8, #e9d8a6);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.15),
+        inset 0 0 30px #fff7d1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid #d1c18a;
+    font-feature-settings: "liga", "kern";
 }
 
-/* English and Tamil Announcements */
-.english-announcement,
-.tamil-announcement,
-.text-announcement {
+/* Pages Container */
+.pages {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+/* Each page */
+.page {
+    background: #fefcf5;
     flex: 1;
+    margin: 1.25rem;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: inset 0 0 18px #c1b77e;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #3a3a3a;
+    font-style: normal;
+    text-align: justify;
+    transition: box-shadow 0.3s ease;
+    border: 1px solid #e0d7a3;
 }
 
-/* Announcement Labels */
-.announcement-label {
-    color: #00239c; /* Brown text color */
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    text-align: left;
+/* Subtle hover effect for desktop */
+.page:hover {
+    box-shadow: inset 0 0 24px #b3a55f, 0 0 10px rgba(180, 150, 40, 0.2);
 }
 
-.tamil-announcement .announcement-label {
-    text-align: center; /* Align Tamil label to the right */
+/* Scrollbar for content overflow */
+.page::-webkit-scrollbar {
+    width: 10px;
+}
+.page::-webkit-scrollbar-track {
+    background: #f6f2d4;
+}
+.page::-webkit-scrollbar-thumb {
+    background-color: #c1b77e;
+    border-radius: 6px;
+    border: 2px solid #f6f2d4;
 }
 
-.text-announcement .announcement-label {
-    text-align: center; /* Center the label for text announcements */
+/* Page Headings */
+.page h3 {
+    color: #1a237e;
+    margin-bottom: 1.2rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    user-select: text;
 }
 
-/* Announcement Container */
-.announcement {
-    background-color: #FDEFB5; /* Light red background */
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px #FDEFB5;
-    overflow: hidden; /* Ensure the content doesn't overflow */
+/* Announcement Titles */
+.announcement-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 0.9rem;
+    color: #4a4a4a;
+    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+    user-select: text;
 }
+
+/* Announcement Info Text */
 .announcement-info {
-  white-space: pre-line;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    white-space: pre-line;
+    color: #555;
+    font-family: 'Georgia', serif;
+    user-select: text;
 }
 
-.announcement img {
-    width: 100%; /* Make the image fill the container */
-    height: auto; /* Adjust height automatically */
-    border-radius: 10px; /* Rounded corners for the image */
-    display: block; /* Remove extra space below the image */
-    margin: 0 auto; /* Center the image horizontally */
-}
-
-/* Text Announcement Styles */
-.text-announcement .announcement {
-    background-color: #FDEFB5; /* Light red background */
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px #FDEFB5
-}
-
-.text-announcement p {
-    color: #333; /* Dark text color */
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .announcements-section {
-        padding: 0; /* Remove padding for full-width background */
+/* Responsive for tablets */
+@media (max-width: 900px) {
+    .book {
+        width: 90%;
+        max-width: 600px;
+        height: 440px;
+        border-radius: 14px;
     }
-
-    .announcements-container {
+    .pages {
         flex-direction: column;
-        gap: 1rem; /* Reduce gap between announcements */
     }
-
-    .announcement-label {
-        text-align: center; /* Center labels on smaller screens */
+    .page {
+        height: 50%;
+        padding: 2rem 1.5rem;
+        margin: 0.75rem auto;
+        max-width: 600px;
+        font-size: 1rem;
+        line-height: 1.6;
     }
-
-    .tamil-announcement .announcement-label {
-        text-align: center; /* Center Tamil label on smaller screens */
+    .page h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
     }
-
-    .text-announcement .announcement-label {
-        text-align: center; /* Center text announcement label on smaller screens */
+    .announcement-title {
+        font-size: 1.15rem;
     }
-
-    /* Adjust announcement container for mobile view */
-    .announcement {
-        padding: 1rem; /* Add some padding for better spacing */
-        border-radius: 10px; /* Keep border radius for a clean look */
-        margin: 0; /* Reset margin for mobile */
+    .announcement-info {
+        font-size: 1rem;
+        line-height: 1.65;
     }
-
-    /* Adjust image for mobile view */
-    .announcement img {
-        width: 100%; /* Full width of the container */
-        height: auto; /* Maintain aspect ratio */
-        border-radius: 10px; /* Keep border radius for a clean look */
+    .announcements-heading {
+        font-size: 1.8rem;
     }
-
-    /* Adjust text announcement for mobile view */
-    .text-announcement p {
-        font-size: 0.9rem; /* Slightly smaller text for mobile */
+    .announcements-heading i {
+        font-size: 1.4rem;
     }
 }
+
+/* Responsive for mobile phones */
+@media (max-width: 480px) {
+    .book {
+        width: 100%;
+        max-width: 360px;  /* fit typical mobile screens */
+        height: auto;      /* let height adjust */
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        padding-bottom: 1rem;
+    }
+
+    .pages {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .page {
+        height: auto;
+        padding: 1.25rem 1rem;
+        margin: 0.5rem auto;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        overflow: visible;
+        max-width: 360px;
+        border-radius: 10px;
+    }
+
+    .page h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .announcement-title {
+        font-size: 1.1rem;
+    }
+
+    .announcement-info {
+        font-size: 0.9rem;
+        line-height: 1.45;
+    }
+
+    .announcements-heading {
+        font-size: 1.4rem;
+        padding: 0 0.5rem;
+    }
+
+    .announcements-heading i {
+        font-size: 1.1rem;
+    }
+}
+
+
 /* Parish News Section Styles */
 .parish-news-section {
     padding: 2rem;

@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 document.addEventListener('DOMContentLoaded', function () {
     // Hamburger Navigation
     const hamburger = document.getElementById('hamburger');
@@ -143,6 +144,17 @@ function restartPriestSlider() {
   clearInterval(priestInterval);
   priestInterval = setInterval(autoPriestSlide, 5000);
 }
+
+
+<lottie-player
+    src="https://assets1.lottiefiles.com/packages/lf20_0yfsb3a1.json"
+    background="transparent"
+    speed="1"
+    style="width: 50px; height: 50px;"
+    loop
+    autoplay>
+</lottie-player>
+
 
     // Read More Button
     const readMoreBtn = document.getElementById('read-more-btn');
