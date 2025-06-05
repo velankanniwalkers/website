@@ -543,21 +543,40 @@ nav {
 }
 
 /* Extra small devices */
-.profile-container {
+/* Flex wrapper for responsive layout */
+.profiles-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;      /* Center contents horizontally */
-  text-align: center;       /* Center text */
+  align-items: center;
+  gap: 20px;
   margin-top: 20px;
 }
 
+/* Individual profile block */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Image styles */
 .image-container img {
-  width: 220px;             /* Slightly bigger than square */
-  height: 260px;            /* Slightly taller than wide */
+  width: 220px;
+  height: 260px;
   object-fit: cover;
   border: 4px solid #0072CE; /* Pantone 285 C */
-  border-radius: 0;         /* Keep corners sharp (no rounding) */
+  border-radius: 0;
 }
+
+/* Responsive: Show side-by-side on medium screens and up */
+@media (min-width: 768px) {
+  .profiles-wrapper {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
 
 
 /* Our Priests Section */
@@ -713,6 +732,28 @@ nav {
     }
 }
 
+.memory-section {
+  background-color: #FDEFB5;
+  padding: 2rem;
+  text-align: center;
+}
+
+.memory-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color:#00239c ;
+  margin-bottom: 1.5rem;
+}
+
+.memory-image {
+  width: 100%;
+  max-width: 900px;
+  border: 5px solid #00239c; /* Pantone blue outline */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
 .outreach-section {
   background-color: #FDEFB5;
   padding: 40px 20px;
@@ -753,24 +794,57 @@ nav {
 /* Images container */
 .outreach-images {
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   margin-top: 30px;
-  flex-wrap: nowrap; /* prevent wrapping */
 }
 
+/* Base image style */
 .outreach-images img {
-  max-width: 45%;
-  height: auto;
+  width: 100%;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 35, 156, 0.2);
   transition: transform 0.3s ease;
   cursor: pointer;
 }
 
+/* Bottom images default */
+.bottom-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Desktop / default sizes */
+.top-image img {
+  max-width: 320px;
+}
+
+.bottom-images img {
+  max-width: 260px;
+}
+
+/* Mobile-specific override for larger top image */
+@media (max-width: 767px) {
+  .top-image img {
+    max-width: 90vw;  /* Almost full width */
+  }
+
+  .bottom-images img {
+    max-width: 45vw;  /* Smaller side-by-side */
+  }
+
+  .bottom-images {
+    gap: 10px;
+  }
+}
+
 .outreach-images img:hover {
   transform: scale(1.05);
 }
+
 
 /* Fade and slide up animation */
 @keyframes fadeSlideIn {
