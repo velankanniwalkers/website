@@ -81,7 +81,7 @@ nav {
     height: 40px;
     object-fit:cover; /* or 'cover' if you want it to fill the box */
     background-color: white; /* remove white if PNG is transparent */
-    border: 2px solid #D4AF37;
+    border: 2px solid ;
    
 }
 
