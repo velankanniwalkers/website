@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate | Velankanni Walkers Social Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            padding-bottom: 5rem;
+            margin-bottom: -2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .tagline {
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Donation Cards */
+        .donation-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .donation-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .donation-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .donation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-body p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .bank-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 0.8rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--dark);
+        }
+
+        .detail-value {
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .razorpay-btn {
+            margin-top: 1rem;
+        }
+
+        /* Impact Section */
+        .impact-section {
+            background: linear-gradient(135deg, #f5f7ff, #e6ebff);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .impact-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            min-width: 200px;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .donation-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .donation-card {
+                width: 100%;
+            }
+
+            header {
+                clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+                padding-bottom: 4rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo floating">
+                <i class="fas fa-hands-helping"></i>Velankanni Walkers
+            </div>
+            <p class="tagline">Join us in making a difference through your generous donations</p>
+        </div>
+    </header>
+
+    <section class="donation-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Choose Your Donation Method</h2>
+            </div>
+
+            <div class="donation-cards">
+                <div class="donation-card animate">
+                    <div class="card-header">
+                        <h3>Direct Bank Transfer</h3>
+                        <i class="fas fa-university" style="font-size: 2rem; margin-top: 10px;"></i>
+                    </div>
+                    <div class="card-body">
+                        <p>Make a direct donation to our bank account. All donations are tax-deductible as per applicable laws.</p>
+                        
+                        <div class="bank-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Account Name:</span>
+                                <span class="detail-value">VELANKANNI WALKERS SOCIAL SERVICE</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Account Number:</span>
+                                <span class="detail-value">710948957</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Account Type:</span>
+                                <span class="detail-value">SAVINGS</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Bank Name:</span>
+                                <span class="detail-value">INDIAN BANK</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">IFSC Code:</span>
+                                <span class="detail-value">IDIB000M002</span>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-info-circle"></i> After donation, please email transaction details to donations@velankanniwalkers.org for receipt.</p>
+                    </div>
+                </div>
+
+                <div class="donation-card animate delay-1">
+                    <div class="card-header">
+                        <h3>Trust Donation</h3>
+                        <i class="fas fa-hand-holding-heart" style="font-size: 2rem; margin-top: 10px;"></i>
+                    </div>
+                    <div class="card-body">
+                        <p>Make a secure online donation through our trusted payment partner Razorpay. This option is specifically for trust donations.</p>
+                        
+                        <p>Your contribution will help fund our long-term projects and endowment funds.</p>
+                        
+                        <form class="razorpay-btn">
+                            <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="YOUR_RAZORPAY_BUTTON_ID" async> </script>
+                        </form>
+                        
+                        <p style="font-size: 0.9rem; margin-top: 1rem; color: #666;"><i class="fas fa-receipt"></i> Instant tax receipt will be emailed to you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your Impact Matters</h2>
+                <p>See how your donations are making a difference</p>
+            </div>
+            
+            <div class="impact-stats">
+                <div class="stat-item animate delay-1">
+                    <div class="stat-number">1,250+</div>
+                    <div class="stat-label">Lives Impacted</div>
+                </div>
+                <div class="stat-item animate delay-2">
+                    <div class="stat-number">75+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item animate">
+                    <div class="stat-number">₹5.8L+</div>
+                    <div class="stat-label">Donations Raised</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <p style="color: #ddd; margin-bottom: 1rem;">Velankanni Walkers Social Service is dedicated to creating positive change in our community through various social initiatives.</p>
+                   
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                       
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> No 10 Sudar Avenue, Rajakilpakkam, Sembakkam, Selaiyur Chennai 73, Tamil Nadu, India</li>
+                        <li><i class="fas fa-phone" style="margin-right: 8px;"></i>+91 9840454148 </li><li>+91 9444916629 </li><li>+91 9884142707</li>
+                        <li><i class="fas fa-envelope" style="margin-right: 8px;"></i>velankanniwalkerssocialservice@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Velankanni Walkers Social Service. All Rights Reserved. | Registered Charity No: [Your Registration Number]</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation trigger on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(element => {
+                element.style.opacity = 0;
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
