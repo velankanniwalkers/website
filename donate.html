@@ -637,28 +637,103 @@
                     <div class="card-body">
                         <p>Make a direct donation to our bank account. All donations are as per applicable laws.</p>
                         
-                        <div class="bank-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Account Name:</span>
-                                <span class="detail-value">VELANKANNI WALKERS SOCIAL SERVICE</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Account Number:</span>
-                                <span class="detail-value">710948957</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Account Type:</span>
-                                <span class="detail-value">SAVINGS</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Bank Name:</span>
-                                <span class="detail-value">INDIAN BANK</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">IFSC Code:</span>
-                                <span class="detail-value">IDIB000M002</span>
-                            </div>
-                        </div>
+                       <div class="bank-details">
+  <div class="detail-item">
+    <span class="detail-label">Account Name:</span>
+    <span class="detail-value" id="accountName">VELANKANNI WALKERS SOCIAL SERVICE</span>
+    <button class="copy-btn" onclick="copyToClipboard('accountName')">
+      <i class="far fa-copy"></i>
+    </button>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">Account Number:</span>
+    <span class="detail-value" id="accountNumber">710948957</span>
+    <button class="copy-btn" onclick="copyToClipboard('accountNumber')">
+      <i class="far fa-copy"></i>
+    </button>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">Account Type:</span>
+    <span class="detail-value" id="accountType">SAVINGS</span>
+    <button class="copy-btn" onclick="copyToClipboard('accountType')">
+      <i class="far fa-copy"></i>
+    </button>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">Bank Name:</span>
+    <span class="detail-value" id="bankName">INDIAN BANK</span>
+    <button class="copy-btn" onclick="copyToClipboard('bankName')">
+      <i class="far fa-copy"></i>
+    </button>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">IFSC Code:</span>
+    <span class="detail-value" id="ifscCode">IDIB000M002</span>
+    <button class="copy-btn" onclick="copyToClipboard('ifscCode')">
+      <i class="far fa-copy"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+function copyToClipboard(elementId) {
+  const element = document.getElementById(elementId);
+  const text = element.innerText;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    // Change icon briefly to show success
+    const btn = element.nextElementSibling;
+    btn.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+      btn.innerHTML = '<i class="far fa-copy"></i>';
+    }, 1000);
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+  });
+}
+</script>
+
+<style>
+.bank-details {
+  font-family: Arial, sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.detail-value {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+}
+
+.copy-btn:hover {
+  color: #333;
+}
+
+.far, .fas {
+  font-size: 16px;
+}
+</style>
                         
                         <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-info-circle"></i> After donation, please email transaction details to velankanniwalkerssocialservice@gmail.com for receipt or click here<a href="mailto:velankanniwalkerssocialservice@gmail.com?subject=Velankaani Walkers Social Service Donation Trust" style="margin-left: 5px;">
     <i class="fas fa-envelope" style="color: red;"></i>
@@ -700,10 +775,7 @@
                     <h3>About Us</h3>
                     <p>Velankanni Walkers Social Service is dedicated to creating positive change in our community through various social initiatives.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                       
                     </div>
                 </div>
                 <div class="footer-column">
