@@ -7,14 +7,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4cc9f0;
+            --pantone-blue: #002D72;  /* Pantone 2945 C */
+            --pantone-gold: #FFC72C;   /* Pantone 124 C */
+            --blue-dark: #001A4D;
+            --blue-light: #E6ECFA;
+            --gold-light: #FFE7A3;
+            --gold-dark: #E6B400;
             --light: #f8f9fa;
             --dark: #212529;
             --success: #4bb543;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
 
@@ -26,50 +30,79 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f5f7ff;
+            background-color: #f9fafc;
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--pantone-blue), var(--blue-dark));
             color: white;
-            padding: 2rem 0;
+            padding: 3rem 0;
             text-align: center;
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-            padding-bottom: 5rem;
+            padding-bottom: 6rem;
             margin-bottom: -2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 199, 44, 0.1) 0%, transparent 30%);
+            pointer-events: none;
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 1rem;
             display: inline-block;
+            position: relative;
         }
 
         .logo i {
             margin-right: 10px;
-            color: var(--accent);
+            color: var(--pantone-gold);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--pantone-gold);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .tagline {
             font-weight: 300;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 1.5rem auto 0;
             opacity: 0.9;
+            font-size: 1.1rem;
+            padding: 0 15px;
         }
 
         /* Donation Cards */
         .donation-section {
-            padding: 3rem 0;
+            padding: 4rem 0 3rem;
         }
 
         .section-title {
@@ -79,21 +112,22 @@
         }
 
         .section-title h2 {
-            font-size: 2rem;
-            color: var(--secondary);
+            font-size: 2.2rem;
+            color: var(--pantone-blue);
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
 
         .section-title h2::after {
             content: '';
             position: absolute;
             width: 80px;
-            height: 3px;
-            background: var(--accent);
+            height: 4px;
+            background: var(--pantone-gold);
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 2px;
         }
 
         .donation-cards {
@@ -105,96 +139,146 @@
 
         .donation-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
             flex: 1;
-            min-width: 300px;
+            min-width: 280px;
             max-width: 450px;
             position: relative;
             z-index: 1;
+            border-top: 4px solid var(--pantone-gold);
         }
 
         .donation-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 45, 114, 0.15);
         }
 
         .card-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--pantone-blue);
             color: white;
-            padding: 1.5rem;
+            padding: 1.8rem 1.5rem;
             text-align: center;
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--pantone-blue);
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+            z-index: -1;
         }
 
         .card-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
+            word-wrap: break-word;
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
         }
 
         .card-body p {
             margin-bottom: 1.5rem;
             color: #555;
+            word-wrap: break-word;
         }
 
         .bank-details {
-            background: #f8f9fa;
+            background: var(--blue-light);
             border-radius: 8px;
-            padding: 1.2rem;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
+            overflow-wrap: break-word;
+            border-left: 3px solid var(--pantone-gold);
         }
 
         .detail-item {
             display: flex;
             margin-bottom: 0.8rem;
+            flex-wrap: wrap;
         }
 
         .detail-label {
             font-weight: 600;
             min-width: 120px;
-            color: var(--dark);
+            color: var(--pantone-blue);
+            margin-bottom: 5px;
         }
 
         .detail-value {
-            color: #555;
+            color: #444;
+            flex: 1;
+            min-width: 150px;
+            font-family: 'Courier New', monospace;
         }
 
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--pantone-blue), var(--blue-dark));
             color: white;
-            padding: 0.8rem 1.8rem;
+            padding: 1rem 2rem;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: var(--transition);
             border: none;
             cursor: pointer;
             text-align: center;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 45, 114, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            box-shadow: 0 8px 25px rgba(0, 45, 114, 0.3);
+            background: linear-gradient(135deg, var(--blue-dark), var(--pantone-blue));
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            bottom: -50%;
+            left: -50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.05));
+            transform: rotateZ(60deg) translate(-5em, 7.5em);
+        }
+
+        .btn:hover::after {
+            animation: sheen 1s forwards;
+        }
+
+        @keyframes sheen {
+            100% {
+                transform: rotateZ(60deg) translate(1em, -9em);
+            }
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            border: 2px solid var(--pantone-blue);
+            color: var(--pantone-blue);
             box-shadow: none;
         }
 
         .btn-outline:hover {
-            background: var(--primary);
+            background: var(--pantone-blue);
             color: white;
         }
 
@@ -204,9 +288,22 @@
 
         /* Impact Section */
         .impact-section {
-            background: linear-gradient(135deg, #f5f7ff, #e6ebff);
-            padding: 3rem 0;
+            background: linear-gradient(135deg, #f5f7ff, #e6ecfa);
+            padding: 4rem 0;
             text-align: center;
+            position: relative;
+        }
+
+        .impact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23002D72' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+            pointer-events: none;
         }
 
         .impact-stats {
@@ -215,59 +312,103 @@
             justify-content: center;
             gap: 2rem;
             margin-top: 2rem;
+            position: relative;
         }
 
         .stat-item {
             background: white;
-            padding: 1.5rem 2rem;
-            border-radius: 10px;
+            padding: 2rem;
+            border-radius: 12px;
             box-shadow: var(--shadow);
             min-width: 200px;
             transition: var(--transition);
+            border-bottom: 4px solid var(--pantone-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--pantone-blue);
         }
 
         .stat-item:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 45, 114, 0.15);
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--pantone-blue);
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--pantone-blue);
             color: white;
-            padding: 3rem 0 1.5rem;
+            padding: 4rem 0 2rem;
             text-align: center;
+            position: relative;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFC72C' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+            pointer-events: none;
         }
 
         .footer-content {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             text-align: left;
+            gap: 1.5rem;
+            position: relative;
         }
 
         .footer-column {
             flex: 1;
             min-width: 250px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.3rem;
         }
 
         .footer-column h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            color: var(--pantone-gold);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: var(--pantone-gold);
+            bottom: -8px;
+            left: 0;
         }
 
         .footer-column ul {
@@ -275,30 +416,36 @@
         }
 
         .footer-column ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .footer-column ul li a {
             color: #ddd;
             text-decoration: none;
             transition: var(--transition);
+            display: inline-block;
         }
 
         .footer-column ul li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
+            color: var(--pantone-gold);
+            transform: translateX(5px);
+        }
+
+        .footer-column p {
+            color: #ddd;
+            margin-bottom: 1rem;
+            line-height: 1.7;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
-            justify-content: center;
+            margin-top: 1.5rem;
         }
 
         .social-links a {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
+            color: var(--pantone-blue);
+            background: var(--pantone-gold);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -306,39 +453,113 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .social-links a:hover {
-            background: var(--accent);
+            background: white;
             transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .copyright {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
-            color: #aaa;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            position: relative;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .donation-cards {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .donation-card {
-                width: 100%;
-            }
-
             header {
                 clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
-                padding-bottom: 4rem;
+                padding-bottom: 5rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
             }
 
             .section-title h2 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
+            }
+
+            .card-header h3 {
+                font-size: 1.3rem;
+            }
+
+            .stat-item {
+                min-width: 160px;
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .footer-column {
+                min-width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            footer {
+                clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+
+            .tagline {
+                font-size: 0.95rem;
+            }
+
+            .donation-card {
+                min-width: 100%;
+            }
+
+            .detail-item {
+                flex-direction: column;
+            }
+
+            .detail-label {
+                min-width: 100%;
+                margin-bottom: 2px;
+            }
+
+            .detail-value {
+                min-width: 100%;
+            }
+
+            .stat-item {
+                min-width: 140px;
+                padding: 1.2rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                clip-path: polygon(0 3%, 100% 0, 100% 100%, 0% 100%);
+                padding-top: 3.5rem;
             }
         }
 
@@ -403,7 +624,9 @@
                             <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="YOUR_RAZORPAY_BUTTON_ID" async> </script>
                         </form>
                         
-                        <p style="font-size: 0.9rem; margin-top: 1rem; color: #666;"><i class="fas fa-receipt"></i> Instant tax receipt will be emailed to you.</p>
+                        <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-info-circle"></i> After donation, please email transaction details to velankanniwalkerssocialservice@gmail.com for receipt or click here<a href="mailto:velankanniwalkerssocialservice@gmail.com?subject=Velankaani Walkers Social Service Donation Trust" style="margin-left: 5px;">
+    <i class="fas fa-envelope" style="color: red;"></i>
+  </a></p>
                     </div>
                 </div>
                 <div class="donation-card animate delay-1">
@@ -412,7 +635,7 @@
                         <i class="fas fa-university" style="font-size: 2rem; margin-top: 10px;"></i>
                     </div>
                     <div class="card-body">
-                        <p>Make a direct donation to our bank account. All donations are tax-deductible as per applicable laws.</p>
+                        <p>Make a direct donation to our bank account. All donations are as per applicable laws.</p>
                         
                         <div class="bank-details">
                             <div class="detail-item">
@@ -437,12 +660,11 @@
                             </div>
                         </div>
                         
-                        <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-info-circle"></i> After donation, please email transaction details to velankanniwalkerssocialservice@gmail.com for receipt.</p>
+                        <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-info-circle"></i> After donation, please email transaction details to velankanniwalkerssocialservice@gmail.com for receipt or click here<a href="mailto:velankanniwalkerssocialservice@gmail.com?subject=Velankaani Walkers Social Service Donation Trust" style="margin-left: 5px;">
+    <i class="fas fa-envelope" style="color: red;"></i>
+  </a></p>
                     </div>
                 </div>
-
-                       
-                       
             </div>
         </div>
     </section>
@@ -476,13 +698,19 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>About Us</h3>
-                    <p style="color: #ddd; margin-bottom: 1rem;">Velankanni Walkers Social Service is dedicated to creating positive change in our community through various social initiatives.</p>
-                   
+                    <p>Velankanni Walkers Social Service is dedicated to creating positive change in our community through various social initiatives.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="index.html">Home</a></li>
+                       
                         <li><a href="gallery.html">Gallery</a></li>
                        
                     </ul>
@@ -490,15 +718,22 @@
                 <div class="footer-column">
                     <h3>Contact Info</h3>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> No 10 Sudar Avenue, Rajakilpakkam, Sembakkam, Selaiyur Chennai 73, Tamil Nadu, India</li>
-                        <li><i class="fas fa-phone" style="margin-right: 8px;"></i>+91 9840454148 </li><li>+91 9444916629 </li><li>+91 9884142707</li>
-                        <li><i class="fas fa-envelope" style="margin-right: 8px;"></i>velankanniwalkerssocialservice@gmail.com</li>
-                    </ul>
+                        <li><i class="fas fa-map-marker-alt"></i> No 10 Sudar Avenue, Rajakilpakkam,<br> Sembakkam, Selaiyur<br> Chennai 73, Tamil Nadu, India</li>
+                        <li><i class="fas fa-phone"></i> +91 9840454148</li>
+                        <li><i class="fas fa-phone"></i> +91 9444916629</li>
+                        <li><i class="fas fa-phone"></i> +91 9884142707</li>
+                       <li>
+  <i class="fas fa-envelope"></i>Mail to velankanni walkers social service 
+  <a href="mailto:velankanniwalkerssocialservice@gmail.com?subject=Velankaani Walkers Social Service Donation Trust" style="margin-left: 5px;">
+    <i class="fab fa-google" style="color: #D44638;"></i>
+  </a>
+</li>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Velankanni Walkers Social Service. All Rights Reserved. | Registered Charity No: [Your Registration Number]</p>
+                <p>&copy; 2023 Velankanni Walkers Social Service. All Rights Reserved.</p>
+                <p>Registered Charity No: [Your Registration Number]</p>
             </div>
         </div>
     </footer>
